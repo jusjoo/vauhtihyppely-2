@@ -9,6 +9,7 @@ public class CharacterControl : MonoBehaviour {
 	public float maxJumpTime;
 	public float minJumpTime;
 	
+	
 	private Vector2 lastMousePosition;
 	private bool clicking;
 	private bool jumping;
