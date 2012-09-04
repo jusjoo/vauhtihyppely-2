@@ -47,6 +47,7 @@
      <Compile Include="Assets\CameraFollower.cs" />
      <Compile Include="Assets\CharacterControl.cs" />
      <Compile Include="Assets\CharacterMovement.cs" />
+     <Compile Include="Assets\GUILayOut.cs" />
      <Compile Include="Assets\PixelArtImporter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

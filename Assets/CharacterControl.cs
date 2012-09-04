@@ -30,13 +30,9 @@ public class CharacterControl : MonoBehaviour {
 	}
 	
 	public void sendJump() {
-		Debug.Log("hyppy" + jumpTimer);
-		if (jumpTimer > maxJumpTime)
-			movementHandler.jump(maxJumpTime);
-		else if (jumpTimer < minJumpTime)
-			movementHandler.jump(minJumpTime);
-		else
-			movementHandler.jump(jumpTimer);
+		
+		movementHandler.jump(getJumpTime());
+		
 	}
 	
 	
@@ -88,5 +84,18 @@ public class CharacterControl : MonoBehaviour {
 	}
 	private void cancelJumping(){
 		jumping = false;
+		jumpTimer = 0.0f;
+	}
+	
+	public float getJumpTime(){
+		
+		if (jumpTimer > maxJumpTime)
+			return maxJumpTime;
+		
+		else if (jumpTimer < minJumpTime)
+			return minJumpTime;
+		
+		else
+			return jumpTimer;
 	}
 }
