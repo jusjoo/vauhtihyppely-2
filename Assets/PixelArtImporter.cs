@@ -28,7 +28,7 @@ public class PixelArtImporter : MonoBehaviour {
 				
 				cube.renderer.material.shader = Shader.Find("Transparent/Diffuse");
                 cube.renderer.material.color = color;
-				
+				// testilisäys versionhallintaan
 
 				cube.transform.position = new Vector3(this.transform.position.x + x*cubeSize, this.transform.position.y + y*cubeSize, 0);
                 
