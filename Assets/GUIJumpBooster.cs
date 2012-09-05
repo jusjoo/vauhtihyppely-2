@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class GUILayOut : MonoBehaviour {
+public class GUIJumpBooster : MonoBehaviour {
 	
 		// background image that is 256 x 32
 	public Texture2D bgImage; 
@@ -23,7 +23,7 @@ public class GUILayOut : MonoBehaviour {
 		GUI.BeginGroup (new Rect (0,0,256,32));
 
 		// Draw the background image
-		GUI.Box (new Rect (0,0,256,32), bgImage);
+		GUI.Box (new Rect (0,0,200,32), bgImage);
 
 			// Create a second Group which will be clipped
 			// We want to clip the image and not scale it, which is why we need the second Group
@@ -31,12 +31,13 @@ public class GUILayOut : MonoBehaviour {
 			GUI.BeginGroup (new Rect (0,0,(jumpBoost-control.minJumpTime) * 256, 32));
 
 			// Draw the foreground image
-			GUI.Box (new Rect (0,0,256,32), fgImage);
+			GUI.Box (new Rect (0,0,200,32), fgImage);
 
 			// End both Groups
 			GUI.EndGroup ();
 
 		GUI.EndGroup ();
+
 		
 		
 	}
