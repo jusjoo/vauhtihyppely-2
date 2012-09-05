@@ -27,7 +27,7 @@ public class CharacterControl : MonoBehaviour {
 		
 		// the command was not a jump when there was movement
 		cancelJumping();
-		movementHandler.move(horizontalMovement);
+		movementHandler.move(-horizontalMovement);
 	}
 	
 	public void sendJump() {
