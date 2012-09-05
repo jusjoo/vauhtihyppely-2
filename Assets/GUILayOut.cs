@@ -14,11 +14,10 @@ public class GUILayOut : MonoBehaviour {
 	
 	private CharacterControl control;
 	
-	//private float minJump = this.GetComponent<CharacterControl>().getJumpTime();
-	
 	void OnGUI () {
 		
 		control = this.GetComponent<CharacterControl>();
+		
 		// Create one Group to contain both images
 		// Adjust the first 2 coordinates to place it somewhere else on-screen
 		GUI.BeginGroup (new Rect (0,0,256,32));
