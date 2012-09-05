@@ -10,7 +10,7 @@ public class PixelArtImporter : MonoBehaviour {
 	public float framesPerSecond;
 	
 	private float cubeSize = 0.2f;
-	private float cubeSpacing = 0.05f;
+	private float cubeSpacing = 0.00f;
 	
 	private List<GameObject> cubes;
 	
@@ -42,7 +42,8 @@ public class PixelArtImporter : MonoBehaviour {
 				// vielä yks testi
 
 				cube.transform.position = new Vector3(this.transform.position.x + x*cubeSize, this.transform.position.y - y*cubeSize, 0);
-				
+				cube.GetComponent<BoxCollider>().isTrigger = true;
+				cube.transform.rotation = Random.rotation;
                 cubes.Add(cube);
 				
 			}
