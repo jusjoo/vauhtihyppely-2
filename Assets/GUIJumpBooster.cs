@@ -29,7 +29,7 @@ public class GUIJumpBooster : MonoBehaviour {
 			// We want to clip the image and not scale it, which is why we need the second Group
 			jumpBoost = control.getJumpTime();
 			GUI.BeginGroup (new Rect (0,0,(jumpBoost-control.minJumpTime) * 256, 32));
-
+			
 			// Draw the foreground image
 			GUI.Box (new Rect (0,0,200,32), fgImage);
 
