@@ -12,7 +12,7 @@ public class SpriteAnimator : MonoBehaviour {
 	private float animationStateTime;
 	private AnimationState currentAnimation;
 
-	public enum AnimationState { Idle, Run, Jump }
+	public enum AnimationState { Idle, Run, Jump, Boost }
 
 	
 
