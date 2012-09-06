@@ -50,7 +50,7 @@
      <Compile Include="Assets\CharacterMovement.cs" />
      <Compile Include="Assets\GUICaffeineMeter.cs" />
      <Compile Include="Assets\GUIJumpBooster.cs" />
-     <Compile Include="Assets\NewBehaviourScript.cs" />
+     <Compile Include="Assets\HUDJumpBooster.cs" />
      <Compile Include="Assets\PixelArtImporter.cs" />
      <Compile Include="Assets\SpriteAnimator.cs" />
   </ItemGroup>

@@ -15,11 +15,13 @@ public class CharacterMovement : MonoBehaviour {
 	
 	
 	private Rigidbody rigidbody;
+    private HUDJumpBooster guiText;
 	
 	// Use this for initialization
 	void Start () {
 		rigidbody = this.GetComponent<Rigidbody>();
 		if ( speed == 0 ) speed = 5;
+        guiText = GameObject.Find("JumpBooster").GetComponent<HUDJumpBooster>();
 	
 	}
 	
@@ -49,5 +51,12 @@ public class CharacterMovement : MonoBehaviour {
 	public void jump(float jumpTimer) {
 		jumpHeight = jumpTimer * jumpHeightMultiplier;
 		jumping = true;
+        justJumped();
 	}
+
+    public void justJumped(){
+
+        guiText.setJumpingDone(true);
+
+    }
 }
