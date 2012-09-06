@@ -4,12 +4,12 @@ using System.Collections;
 public class HUDJumpBooster : MonoBehaviour {
 
 	public Component playerCharacter;
-
+    private CharacterControl control;
+    private GUITexture guiText;
 
 	// a float between 0.0 and 1.0
 	private float jumpBoost;
-	private CharacterControl control;
-    private GUITexture guiText;
+
     private bool jumpingDone;
 
 	
