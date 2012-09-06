@@ -12,7 +12,7 @@ public class CharacterMovement : MonoBehaviour {
 	private Vector3 movement;
 	private bool jumping;
 	private float jumpHeight;
-	
+	private bool jumpingAllowed;
 	
 	private Rigidbody rigidbody;
     private HUDJumpBooster guiText;
@@ -24,6 +24,7 @@ public class CharacterMovement : MonoBehaviour {
 		rigidbody = this.GetComponent<Rigidbody>();
 		if ( speed == 0 ) speed = 5;
         guiText = GameObject.Find("JumpBooster").GetComponent<HUDJumpBooster>();
+
 		animationHandler = this.GetComponent<AnimationStateHandler>();
 
 	}
@@ -52,11 +53,20 @@ public class CharacterMovement : MonoBehaviour {
 	}
 	
 	public void jump(float jumpTimer) {
-		jumpHeight = jumpTimer * jumpHeightMultiplier;
-		jumping = true;
-        justJumped();
-		animationHandler.activateJumpAnimation();
 
+		if (jumpingAllowed)
+		{
+			jumpHeight = jumpTimer * jumpHeightMultiplier;
+			jumping = true;
+			justJumped();
+			animationHandler.activateJumpAnimation();
+		}
+	}
+
+	public void land()
+	{
+		jumpingAllowed = true;
+		animationHandler.deactivateJumpAnimation();
 	}
 
     public void justJumped(){
@@ -64,4 +74,10 @@ public class CharacterMovement : MonoBehaviour {
         guiText.setJumpingDone(true);
 
     }
+
+	public void setJumpingAllowed(bool b)
+	{
+		jumpingAllowed = b;
+	}
+
 }
