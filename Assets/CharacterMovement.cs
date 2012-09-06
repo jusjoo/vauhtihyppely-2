@@ -16,13 +16,16 @@ public class CharacterMovement : MonoBehaviour {
 	
 	private Rigidbody rigidbody;
     private HUDJumpBooster guiText;
+	private AnimationStateHandler animationHandler;
+
 	
 	// Use this for initialization
 	void Start () {
 		rigidbody = this.GetComponent<Rigidbody>();
 		if ( speed == 0 ) speed = 5;
         guiText = GameObject.Find("JumpBooster").GetComponent<HUDJumpBooster>();
-	
+		animationHandler = this.GetComponent<AnimationStateHandler>();
+
 	}
 	
 	// Update is called once per frame
@@ -52,6 +55,8 @@ public class CharacterMovement : MonoBehaviour {
 		jumpHeight = jumpTimer * jumpHeightMultiplier;
 		jumping = true;
         justJumped();
+		animationHandler.activateJumpAnimation();
+
 	}
 
     public void justJumped(){
