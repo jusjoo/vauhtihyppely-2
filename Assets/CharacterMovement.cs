@@ -15,12 +15,13 @@ public class CharacterMovement : MonoBehaviour {
 	
 	
 	private Rigidbody rigidbody;
+	private AnimationStateHandler animationHandler;
 	
 	// Use this for initialization
 	void Start () {
 		rigidbody = this.GetComponent<Rigidbody>();
 		if ( speed == 0 ) speed = 5;
-	
+		animationHandler = this.GetComponent<AnimationStateHandler>();
 	}
 	
 	// Update is called once per frame
@@ -49,5 +50,8 @@ public class CharacterMovement : MonoBehaviour {
 	public void jump(float jumpTimer) {
 		jumpHeight = jumpTimer * jumpHeightMultiplier;
 		jumping = true;
+
+		animationHandler.activateJumpAnimation();
+		
 	}
 }
