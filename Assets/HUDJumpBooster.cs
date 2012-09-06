@@ -25,7 +25,7 @@ public class HUDJumpBooster : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-
+        //Is the jumping sequence completed?
         if (jumpingDone != true)
         {
             jumpBoost = control.getJumpTime();
@@ -33,18 +33,16 @@ public class HUDJumpBooster : MonoBehaviour {
             guiText.pixelInset = new Rect(-90, 19, (jumpBoost - control.minJumpTime) * 200, 18);
         }
 
+        //It is? Fade the jump meter
         else
         {
-            guiText.color -= new Color(0, 0, 0, 0.1f);
+            guiText.color -= new Color(0, 0, 0, 0.05f);
             if (guiText.color.a <= 0)
             {
-                guiText.color = Color.clear;
-                jumpBoost = 0;
+                control.setJumpTime(0);
                 jumpingDone = false;
             }
         }
-       
-
 	}
 
     public void setJumpingDone(bool done){

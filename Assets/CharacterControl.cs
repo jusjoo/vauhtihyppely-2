@@ -99,4 +99,9 @@ public class CharacterControl : MonoBehaviour {
 		else
 			return jumpTimer;
 	}
+
+    public void setJumpTime(float jumpTimeNew)
+    {
+        jumpTimer = jumpTimeNew;
+    }
 }
