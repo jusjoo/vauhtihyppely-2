@@ -15,7 +15,7 @@ public class CharacterMovement : MonoBehaviour {
 	private Vector3 movement;
 	private bool jumping;
 	private float jumpHeight;
-	private bool jumpingAllowed;
+	private bool feetOnGround;
 	private float boostCooldown;
 	private bool boosting;
 	
@@ -52,10 +52,11 @@ public class CharacterMovement : MonoBehaviour {
 		rigidbody.AddForce (deltaMove);
 		movement =- deltaMove;
 		
-		// handle jumping
+		// handle jumping, also stop boosting if jumping
 		if (jumping) {
 			rigidbody.AddForce (0, jumpHeight, 0);
 			jumping = false;
+			boosting = false;
 		}
 
 		// count boost cooldown if active
@@ -71,7 +72,7 @@ public class CharacterMovement : MonoBehaviour {
 		{
 			slowDown(horizontalMovement);
 		}
-		else if (boostCooldown <= 0)
+		else if (boostCooldown <= 0 && feetOnGround)
 		{
 			boostCooldown = boostCooldownTime;
 			boosting = true;
@@ -82,7 +83,6 @@ public class CharacterMovement : MonoBehaviour {
 	
 	private void slowDown(float amount)
 	{
-		Debug.Log("Slowing down!");
 		movement.x += amount;
 		if (movement.x < minimumSpeed)
 			movement.x = minimumSpeed;
@@ -90,13 +90,12 @@ public class CharacterMovement : MonoBehaviour {
 
 	private void boost()
 	{
-		Debug.Log("Boosting!");
 		movement.x += boostAmount;
 	}
 
 	public void jump(float jumpTimer) {
 
-		if (jumpingAllowed)
+		if (feetOnGround)
 		{
 			jumpHeight = jumpTimer * jumpHeightMultiplier;
 			jumping = true;
@@ -109,13 +108,13 @@ public class CharacterMovement : MonoBehaviour {
 
 	public void land()
 	{
-		jumpingAllowed = true;
+		feetOnGround = true;
 		animationHandler.deactivateJumpAnimation();
 	}
 
 	public void setJumpingAllowed(bool b)
 	{
-		jumpingAllowed = b;
+		feetOnGround = b;
 	}
 
 }
