@@ -1,6 +1,11 @@
 using UnityEngine;
 using System.Collections;
 
+/*
+ * TODO:
+ * Korjaa hyppymittarin feidaaminen hahmon ollessa ilmassa
+ */
+
 public class HUDJumpBooster : MonoBehaviour {
 
 	public Component playerCharacter;
