@@ -53,6 +53,7 @@
      <Compile Include="Assets\HUDCaffeineMeter.cs" />
      <Compile Include="Assets\HUDJumpBooster.cs" />
      <Compile Include="Assets\LevelChooserButton.cs" />
+     <Compile Include="Assets\LevelCompletion.cs" />
      <Compile Include="Assets\PixelArtImporter.cs" />
      <Compile Include="Assets\SpriteAnimator.cs" />
      <Compile Include="Assets\StatsHandler.cs" />
