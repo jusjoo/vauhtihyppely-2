@@ -44,19 +44,19 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\AnimationStateHandler.cs" />
-     <Compile Include="Assets\CameraFollower.cs" />
-     <Compile Include="Assets\CharacterControl.cs" />
-     <Compile Include="Assets\CharacterMovement.cs" />
-     <Compile Include="Assets\FallingDeathHandler.cs" />
-     <Compile Include="Assets\FeetSensorTrigger.cs" />
-     <Compile Include="Assets\HUDCaffeineMeter.cs" />
-     <Compile Include="Assets\HUDJumpBooster.cs" />
-     <Compile Include="Assets\LevelChooserButton.cs" />
-     <Compile Include="Assets\LevelCompletion.cs" />
-     <Compile Include="Assets\PixelArtImporter.cs" />
-     <Compile Include="Assets\SpriteAnimator.cs" />
-     <Compile Include="Assets\StatsHandler.cs" />
+     <Compile Include="Assets\Scripts\AnimationStateHandler.cs" />
+     <Compile Include="Assets\Scripts\CameraFollower.cs" />
+     <Compile Include="Assets\Scripts\CharacterControl.cs" />
+     <Compile Include="Assets\Scripts\CharacterMovement.cs" />
+     <Compile Include="Assets\Scripts\FallingDeathHandler.cs" />
+     <Compile Include="Assets\Scripts\FeetSensorTrigger.cs" />
+     <Compile Include="Assets\Scripts\HUDCaffeineMeter.cs" />
+     <Compile Include="Assets\Scripts\HUDJumpBooster.cs" />
+     <Compile Include="Assets\Scripts\LevelChooserButton.cs" />
+     <Compile Include="Assets\Scripts\LevelCompletion.cs" />
+     <Compile Include="Assets\Scripts\PixelArtImporter.cs" />
+     <Compile Include="Assets\Scripts\SpriteAnimator.cs" />
+     <Compile Include="Assets\Scripts\StatsHandler.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
