@@ -44,8 +44,8 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Resources\PelaajaSpritet\Materials\CameraFollower.cs" />
      <Compile Include="Assets\Scripts\AnimationStateHandler.cs" />
-     <Compile Include="Assets\Scripts\CameraFollower.cs" />
      <Compile Include="Assets\Scripts\CharacterControl.cs" />
      <Compile Include="Assets\Scripts\CharacterMovement.cs" />
      <Compile Include="Assets\Scripts\FallingDeathHandler.cs" />
