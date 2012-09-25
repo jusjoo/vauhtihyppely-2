@@ -1,6 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{3AD08801-8139-117F-AE6B-5C338E695A24}"
+# Visual Studio 2008
+
+Project("{2A008740-2B50-726A-C4DB-4B49ACF75844}") = "vauhtihyppely2", "Assembly-CSharp.csproj", "{974BDD62-6540-A722-236D-2BFD5CDC6BDA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,15 +9,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3AD08801-8139-117F-AE6B-5C338E695A24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3AD08801-8139-117F-AE6B-5C338E695A24}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3AD08801-8139-117F-AE6B-5C338E695A24}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3AD08801-8139-117F-AE6B-5C338E695A24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{974BDD62-6540-A722-236D-2BFD5CDC6BDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{974BDD62-6540-A722-236D-2BFD5CDC6BDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{974BDD62-6540-A722-236D-2BFD5CDC6BDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{974BDD62-6540-A722-236D-2BFD5CDC6BDA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(MonoDevelopProperties) = preSolution
+				GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
@@ -34,4 +35,5 @@ Global
 		$3.inheritsScope = text/plain
 		$3.scope = text/plain
 	EndGlobalSection
+
 EndGlobal
