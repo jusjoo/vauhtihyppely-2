@@ -3,6 +3,8 @@ using System.Collections;
 
 [RequireComponent (typeof (Rigidbody))]
 
+/*TODO: hiirenklikkauksen minimiaika. eli ettei hyppää slaidatessa*/
+
 public class CharacterMovement : MonoBehaviour {
 	
 	public float jumpHeightMultiplier;
@@ -115,6 +117,9 @@ public class CharacterMovement : MonoBehaviour {
 	public void setJumpingAllowed(bool b)
 	{
 		feetOnGround = b;
+	}
+	public bool getJumpingAllowed(){
+		return feetOnGround;
 	}
 
 }
