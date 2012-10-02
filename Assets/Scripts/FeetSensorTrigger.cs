@@ -17,7 +17,6 @@ public class FeetSensorTrigger : MonoBehaviour {
 	
 	void OnCollisionEnter(Collision collision) {
 		movement.land();
-		Debug.Log("asd");
 	}
 
 	void OnCollisionExit(Collision collision)

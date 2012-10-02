@@ -116,5 +116,8 @@ public class CharacterMovement : MonoBehaviour {
 	{
 		feetOnGround = b;
 	}
+	public bool getJumpingAllowed(){
+		return feetOnGround;
+	}
 
 }
