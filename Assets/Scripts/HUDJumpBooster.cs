@@ -45,11 +45,10 @@ public class HUDJumpBooster : MonoBehaviour {
 	}
 	
 	public void startJumpBoost(){
-		if(movement.getJumpingAllowed() == true){
-			jumpBoost = control.getJumpTime();
-	        guiText.color = Color.Lerp(Color.green, Color.red, (jumpBoost - control.minJumpTime));
-	        guiText.pixelInset = new Rect(-90, 19, (jumpBoost - control.minJumpTime) * 200, 18);
-		}
+		jumpBoost = control.getJumpTime();
+	    guiText.color = Color.Lerp(Color.green, Color.red, (jumpBoost - control.minJumpTime));
+	    guiText.pixelInset = new Rect(-90, 19, (jumpBoost - control.minJumpTime) * 200, 18);
+
 	}
 	
 	public void fadeJumpBoostMeter(){
