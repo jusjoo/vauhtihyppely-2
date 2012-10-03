@@ -26,7 +26,6 @@ public class CharacterControl : MonoBehaviour {
 	public void sendMovement(float horizontalMovement) {
 		
 		// the command was not a jump when there was movement
-		cancelJumping();
 		movementHandler.move(-horizontalMovement);
 	}
 	
@@ -39,7 +38,6 @@ public class CharacterControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
 		
 		if (Input.GetMouseButtonDown(0)) {
 			clicking = true;
@@ -70,6 +68,9 @@ public class CharacterControl : MonoBehaviour {
 			
 			lastMousePosition = Input.mousePosition;
 			if (jumping) {
+				if(!movementHandler.getJumpingAllowed()){
+					cancelJumping();
+				}
 				jumpTimer += Time.deltaTime;
 			}
 			
