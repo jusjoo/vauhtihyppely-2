@@ -17,6 +17,9 @@ public class SpriteAnimator : MonoBehaviour {
 	private float animationStateTime;
 	private AnimationState currentAnimation;
 
+    // will the sprite be flipped
+    private bool flipped;
+
 	public enum AnimationState { Idle, Run, Jump, Boost }
 
 	
@@ -31,6 +34,23 @@ public class SpriteAnimator : MonoBehaviour {
 
 		animationStateTime += Time.deltaTime;
 
+        if (flipped)
+        {
+            
+            if (transform.localScale.z > 0)
+            {
+ 
+                transform.localScale += new Vector3(0, 0, -2f);
+            }
+        }
+       else
+        {
+            if (transform.localScale.z < 0)
+            {
+                transform.localScale += new Vector3(0, 0, 2f);
+            }
+        }
+
 
 		if (currentAnimation == AnimationState.Run)
 		{
@@ -41,12 +61,6 @@ public class SpriteAnimator : MonoBehaviour {
 		if (currentAnimation == AnimationState.Idle)
 		{
 			this.renderer.material.mainTexture = runTextures[0];
-		}
-
-		if (currentAnimation == AnimationState.Boost)
-		{
-			checkLoop(boostAnimationLength * boostTextures.Count);
-			this.renderer.material.mainTexture = boostTextures[(int)Mathf.Floor(animationStateTime / boostTextures.Count / boostAnimationLength)];
 		}
 
 		if (currentAnimation == AnimationState.Jump)
@@ -74,4 +88,10 @@ public class SpriteAnimator : MonoBehaviour {
 		}
 	}
 
+
+    internal void flip(bool b)
+    {
+        
+        this.flipped = b;
+    }
 }
