@@ -6,8 +6,7 @@ public class FeetSensorTrigger : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		movement = this.GetComponent<CharacterMovement>(); 
-		
+		movement = this.GetComponent<CharacterMovement>();
 	}
 	
 	// Update is called once per frame
@@ -17,7 +16,6 @@ public class FeetSensorTrigger : MonoBehaviour {
 	
 	void OnCollisionEnter(Collision collision) {
 		movement.land();
-		Debug.Log("asd");
 	}
 
 	void OnCollisionExit(Collision collision)
