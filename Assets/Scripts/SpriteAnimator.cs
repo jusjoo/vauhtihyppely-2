@@ -37,7 +37,20 @@ public class SpriteAnimator : MonoBehaviour {
         if (flipped)
         {
             
+            if (transform.localScale.z > 0)
+            {
+ 
+                transform.localScale += new Vector3(0, 0, -2f);
+            }
         }
+       else
+        {
+            if (transform.localScale.z < 0)
+            {
+                transform.localScale += new Vector3(0, 0, 2f);
+            }
+        }
+
 
 		if (currentAnimation == AnimationState.Run)
 		{
@@ -78,6 +91,7 @@ public class SpriteAnimator : MonoBehaviour {
 
     internal void flip(bool b)
     {
+        
         this.flipped = b;
     }
 }

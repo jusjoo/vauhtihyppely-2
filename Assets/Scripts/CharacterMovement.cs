@@ -46,6 +46,11 @@ public class CharacterMovement : MonoBehaviour {
         {
             animationHandler.flip(true);
         }
+        else 
+        {
+            animationHandler.flip(false);
+        }
+
 
 
 	}
