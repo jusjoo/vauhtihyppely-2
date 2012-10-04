@@ -9,7 +9,7 @@ public class AnimationStateHandler : MonoBehaviour {
 	private SpriteAnimator animator;
 	private Rigidbody body;
 	private bool jumping;
-	private bool boosting;
+    private bool flipped;
 	
 
 	// Use this for initialization
@@ -29,21 +29,16 @@ public class AnimationStateHandler : MonoBehaviour {
 		}
 		else
 		{
-			if (boosting)
-			{
 
+			if (body.velocity.x < runVelocity)
+			{
+				animator.setAnimationState(SpriteAnimator.AnimationState.Idle);
 			}
 			else
 			{
-				if (body.velocity.x < runVelocity)
-				{
-					animator.setAnimationState(SpriteAnimator.AnimationState.Idle);
-				}
-				else
-				{
-					animator.setAnimationState(SpriteAnimator.AnimationState.Run);
-				}
+				animator.setAnimationState(SpriteAnimator.AnimationState.Run);
 			}
+			
 		}
 	}
 
@@ -55,13 +50,9 @@ public class AnimationStateHandler : MonoBehaviour {
 	{
 		jumping = false;
 	}
-	public void activateBoostAnimation()
-	{
-		boosting = true;
-	}
-	public void deactivateBoostAnimation()
-	{
-		boosting = false;
-	}
 
+    internal void flip(bool b)
+    {
+        animator.flip(b);
+    }
 }
