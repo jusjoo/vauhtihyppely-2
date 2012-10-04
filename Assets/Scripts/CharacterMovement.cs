@@ -41,13 +41,7 @@ public class CharacterMovement : MonoBehaviour {
 		// move the character statically first
 		rigidbody.AddForce (staticSpeed*Time.deltaTime, 0, 0);
 
-		// add boost if boost active
-		if (boosting)
-		{
-			boost();
-			if (boostCooldown < boostCooldownTime - boostDuration)
-				boosting = false;
-		}
+
 		
 		// calculate the movement force given from controllers
 		Vector3 deltaMove = new Vector3(movement.x, movement.y, movement.z) * Time.deltaTime ;
@@ -70,29 +64,11 @@ public class CharacterMovement : MonoBehaviour {
 	
 	public void move(float horizontalMovement) {
 
-		if (horizontalMovement < 0)
-		{
-			slowDown(horizontalMovement);
-		}
-		else if (boostCooldown <= 0 && feetOnGround)
-		{
-			boostCooldown = boostCooldownTime;
-			boosting = true;
-		}
+        if (feetOnGround)
+        {
+            movement.x = +horizontalMovement;
+        }
 
-	}
-
-	
-	private void slowDown(float amount)
-	{
-		movement.x += amount;
-		if (movement.x < minimumSpeed)
-			movement.x = minimumSpeed;
-	}
-
-	private void boost()
-	{
-		movement.x += boostAmount;
 	}
 
 	public void jump(float jumpTimer) {
