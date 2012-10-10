@@ -30,7 +30,7 @@ public class AnimationStateHandler : MonoBehaviour {
 		else
 		{
 
-			if (body.velocity.x < runVelocity)
+			if (body.velocity.x < runVelocity && body.velocity.x > -runVelocity)
 			{
 				animator.setAnimationState(SpriteAnimator.AnimationState.Idle);
 			}

@@ -1,6 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-vs", "Assembly-CSharp-vs.csproj", "{974BDD62-6540-A722-236D-2BFD5CDC6BDA}"
+# Visual Studio 2008
+
+Project("{BA9F11EC-C349-7D99-93B9-33FDC2BD61E5}") = "git", "Assembly-CSharp-vs.csproj", "{B9FDD979-23E0-1EA8-D885-BE36287D9F67}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,15 +9,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{974BDD62-6540-A722-236D-2BFD5CDC6BDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{974BDD62-6540-A722-236D-2BFD5CDC6BDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{974BDD62-6540-A722-236D-2BFD5CDC6BDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{974BDD62-6540-A722-236D-2BFD5CDC6BDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9FDD979-23E0-1EA8-D885-BE36287D9F67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9FDD979-23E0-1EA8-D885-BE36287D9F67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9FDD979-23E0-1EA8-D885-BE36287D9F67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9FDD979-23E0-1EA8-D885-BE36287D9F67}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(MonoDevelopProperties) = preSolution
+																									GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
@@ -34,4 +35,5 @@ Global
 		$3.inheritsScope = text/plain
 		$3.scope = text/plain
 	EndGlobalSection
+
 EndGlobal
