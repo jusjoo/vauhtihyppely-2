@@ -15,12 +15,13 @@ public class FeetSensorTrigger : MonoBehaviour {
 	}
 	
 	void OnCollisionEnter(Collision collision) {
+		Debug.Log("land");
 		movement.land();
 	}
 
 	void OnCollisionExit(Collision collision)
 	{
-		movement.setJumpingAllowed(false);
+		movement.setFeetOnGround(false);
 	}
 	
 
