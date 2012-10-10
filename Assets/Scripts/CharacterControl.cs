@@ -8,13 +8,17 @@ public class CharacterControl : MonoBehaviour {
 	public float horizontalSensitivity;
 	public float maxJumpTime;
 	public float minJumpTime;
+
+    public float minClickTime;
 	
 	
 	private Vector2 lastMousePosition;
 	private bool clicking;
 	private bool jumping;
 	private float jumpTimer;
-	
+
+    private float realClickTime;
+
 	private CharacterMovement movementHandler;
 	
 	// Use this for initialization
@@ -30,9 +34,7 @@ public class CharacterControl : MonoBehaviour {
 	}
 	
 	public void sendJump() {
-		
 		movementHandler.jump(getJumpTime());
-		
 	}
 	
 	
@@ -80,10 +82,10 @@ public class CharacterControl : MonoBehaviour {
 	}
 	
 	private void startJumping(){
-		jumping = true;
-		jumpTimer = 0.0f;
-		
+        jumping = true;
+        jumpTimer = 0.0f;
 	}
+
 	private void cancelJumping(){
 		jumping = false;
 		jumpTimer = 0.0f;
