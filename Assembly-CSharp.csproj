@@ -48,6 +48,7 @@
      <Compile Include="Assets\Scripts\AnimationStateHandler.cs" />
      <Compile Include="Assets\Scripts\CharacterControl.cs" />
      <Compile Include="Assets\Scripts\CharacterMovement.cs" />
+     <Compile Include="Assets\Scripts\DeathSceneScript.cs" />
      <Compile Include="Assets\Scripts\DeathTrigger.cs" />
      <Compile Include="Assets\Scripts\FallingDeathHandler.cs" />
      <Compile Include="Assets\Scripts\FeetSensorTrigger.cs" />

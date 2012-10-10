@@ -20,6 +20,6 @@ public class FallingDeathHandler : MonoBehaviour {
 
 	public void die()
 	{
-		Application.LoadLevel(0);
+		Application.LoadLevel(3);
 	}
 }
