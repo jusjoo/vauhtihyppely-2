@@ -8,13 +8,15 @@ public class CharacterControl : MonoBehaviour {
 	public float horizontalSensitivity;
 	public float maxJumpTime;
 	public float minJumpTime;
-	
+	public float registerAsJumpTime;
 	
 	private Vector2 lastMousePosition;
 	private bool clicking;
+	private float mouseStationaryTime;
 	private bool jumping;
 	private float jumpTimer;
-	
+	private bool mouseWasMoved;
+
 	private CharacterMovement movementHandler;
 	
 	// Use this for initialization
@@ -27,6 +29,13 @@ public class CharacterControl : MonoBehaviour {
 		
 		// the command was not a jump when there was movement
 		movementHandler.move(-horizontalMovement);
+		wasMoved();
+	}
+
+	private void wasMoved()
+	{
+		mouseStationaryTime = 0.0f;
+		mouseWasMoved = true;
 	}
 	
 	public void sendJump() {
@@ -39,23 +48,20 @@ public class CharacterControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
+		// mouse was clicked
 		if (Input.GetMouseButtonDown(0)) {
 			clicking = true;
-			startJumping();
+			mouseStationaryTime = 0.0f;
 			lastMousePosition = Input.mousePosition;
+			mouseWasMoved = false;
 		}
 		
-		if (Input.GetMouseButtonUp(0)) {
-			clicking = false;
-			
-			// check if the command was to jump 
-			if (jumping) {
-				sendJump();
-			}
-		}
-		
+
+		// mouse is being clicked
 		if (clicking) {
-			
+
+			mouseStationaryTime += Time.deltaTime;
+
 			float horizontalOffset = Input.mousePosition.x - lastMousePosition.x;
 			
 			// check if the controller movement is significant enough to be horizontal movement
@@ -65,15 +71,40 @@ public class CharacterControl : MonoBehaviour {
 			else if (horizontalOffset < -horizontalSensitivity) {
 				sendMovement(horizontalOffset);
 			}
-			
+
 			lastMousePosition = Input.mousePosition;
-			if (jumping) {
-				if(!movementHandler.getJumpingAllowed()){
+
+
+			if (jumping)
+			{
+				if (!movementHandler.getJumpingAllowed())
+				{
 					cancelJumping();
 				}
 				jumpTimer += Time.deltaTime;
 			}
-			
+			else 			
+			{
+				// if the mouse is being clicked and has been stationary for longer than the required jump timer
+				if (mouseStationaryTime > registerAsJumpTime && !mouseWasMoved)
+				{
+					// then we start jumping!
+					startJumping();
+				}
+			}
+		}
+
+
+		// mouse click ends
+		if (Input.GetMouseButtonUp(0))
+		{
+			clicking = false;
+
+			// check if the command was to jump 
+			if (jumping)
+			{
+				sendJump();
+			}
 		}
 	
 	
