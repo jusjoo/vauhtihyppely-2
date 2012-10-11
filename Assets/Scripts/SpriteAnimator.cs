@@ -65,7 +65,8 @@ public class SpriteAnimator : MonoBehaviour {
 
 		if (currentAnimation == AnimationState.Jump)
 		{
-			this.renderer.material.mainTexture = jumpTextures[(int)Mathf.Floor(animationStateTime / jumpTextures.Count / jumpAnimationLength)];
+			checkLoop(jumpAnimationLength * jumpTextures.Count);
+			this.renderer.material.mainTexture = jumpTextures[(int)Mathf.Floor((animationStateTime / jumpTextures.Count) / jumpAnimationLength)];
 		}
 
 	}
