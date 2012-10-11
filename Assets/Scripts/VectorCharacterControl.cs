@@ -53,12 +53,23 @@ public class VectorCharacterControl : MonoBehaviour {
 		}
 
 		// Mouse was released or maximum drag distance achieved
-		if ( ( Input.GetMouseButtonUp(0) && isMouseDown ) || ( getDragDistance() >= maxDragDistance ) ) {
+		if ( ( Input.GetMouseButtonUp(0) && isMouseDown ) ) { // || ( getDragDistance() >= maxDragDistance ) ) {
 			isMouseDown = false;
 			sendMovement(horizontalOffset, verticalOffset);
 			horizontalOffset=0;
 			verticalOffset=0;
 		}
+
+
+        if (Input.GetKey("left"))
+        {
+            sendMovement(5f, 0f);
+        }
+
+        if (Input.GetKey("right"))
+        {
+            sendMovement(-5f, 0f);
+        }
 
 	}
 	
