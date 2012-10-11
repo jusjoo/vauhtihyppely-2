@@ -7,11 +7,7 @@ public class VectorCharacterControl : MonoBehaviour {
 
 	// The distance after the drag is automatically released
 	public float maxDragDistance;
-	
-	// Amount (in pixels) in vertical drag, that is ignored,
-	// to prevent unwanted jumps
-	public float yDeadZone;	
-	
+
 	private bool isMouseDown;
 	private Vector2 originalMousePosition;	
 	private float horizontalOffset;
@@ -31,16 +27,7 @@ public class VectorCharacterControl : MonoBehaviour {
 	void Update () {
 		
 		//Debug.Log("feet on ground: " + movementHandler.isOnGround());
-		
-		// If feet are not on the ground, don't read controls
-		if ( ! movementHandler.isOnGround() ) {
-			
-			// Should not be necessary, but makes it more robust against bugs
-			isMouseDown=false;
-			
-			return;
-		}
-		
+	
 		if ( Input.GetMouseButtonDown(0) && ! isMouseDown )	{
 			// Mouse was pressed down
 			isMouseDown = true;
@@ -56,18 +43,13 @@ public class VectorCharacterControl : MonoBehaviour {
 		if ( ( Input.GetMouseButtonUp(0) && isMouseDown ) || ( getDragDistance() >= maxDragDistance ) ) {
 			isMouseDown = false;
 			sendMovement(horizontalOffset, verticalOffset);
-			horizontalOffset=0;
-			verticalOffset=0;
+			horizontalOffset = 0;
+			verticalOffset = 0;
 		}
 
 	}
 	
 	public void sendMovement(float horizontalOffset, float verticalOffset) {
-		
-		if ( Mathf.Abs(verticalOffset) < yDeadZone ) {
-			verticalOffset = 0;
-		}
-		
 		movementHandler.move(-horizontalOffset, -verticalOffset);
 	}	
 	
