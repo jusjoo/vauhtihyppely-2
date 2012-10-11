@@ -17,7 +17,6 @@ public class LevelCompletion : MonoBehaviour {
 
 	void OnCollisionEnter(Collision collision)
 	{
-		Debug.Log("osuma");
 		if (collision.gameObject == exitObject)
 		{
 			Application.LoadLevel(0);

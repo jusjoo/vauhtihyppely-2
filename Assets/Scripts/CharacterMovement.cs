@@ -5,95 +5,54 @@ using System.Collections;
 
 public class CharacterMovement : MonoBehaviour {
 	
-	public float jumpHeightMultiplier;
-	public float staticSpeed;
-	public float minimumSpeed;
-	public float boostAmount;
-	public float boostDuration;
-	public float boostCooldownTime;
+	public float horizontalMultiplier;
+	public float verticalMultiplier;
+	
+	public float maxSpeedX;
+	public float maxSpeedY;	
 	
 	private Vector3 movement;
+
 	private bool jumping;
-	private float jumpHeight;
-	private bool feetOnGround;
-	private float boostCooldown;
-	private bool boosting;
-	
+	private bool isFeetOnGround;
 
 	private Rigidbody rigidbody;
     private HUDJumpBooster guiText;
 	private AnimationStateHandler animationHandler;
 
-	
 	void Start () {
-
 		rigidbody = this.GetComponent<Rigidbody>();
         guiText = GameObject.Find("JumpBooster").GetComponent<HUDJumpBooster>();
 		animationHandler = this.GetComponent<AnimationStateHandler>();
-
 	}
-	
 
 	void Update () {
-		
-		// move the character statically first
-		rigidbody.AddForce (staticSpeed*Time.deltaTime, 0, 0);
-
-		// add boost if boost active
-		if (boosting)
-		{
-			boost();
-			if (boostCooldown < boostCooldownTime - boostDuration)
-				boosting = false;
-		}
 		
 		// calculate the movement force given from controllers
 		Vector3 deltaMove = new Vector3(movement.x, movement.y, movement.z) * Time.deltaTime ;
 		rigidbody.AddForce (deltaMove);
 		movement =- deltaMove;
+	
+		// Turn player's face to the direction where it is moving
+        animationHandler.flip(rigidbody.velocity.x < 0);
 		
-		// handle jumping, also stop boosting if jumping
-		if (jumping) {
-			rigidbody.AddForce (0, jumpHeight, 0);
-			jumping = false;
-			boosting = false;
-		}
-
-		// count boost cooldown if active
-		if (boostCooldown > 0)
-		{
-			boostCooldown -= Time.deltaTime;
+		if ( ! isOnGround() ) {
+			animationHandler.activateJumpAnimation();
 		}
 	}
 	
-	public void move(float horizontalMovement) {
+	public void move(float horizontalMovement, float verticalMovement) {
 
-		if (horizontalMovement < 0)
-		{
-			slowDown(horizontalMovement);
-		}
-		else if (boostCooldown <= 0 && feetOnGround)
-		{
-			boostCooldown = boostCooldownTime;
-			boosting = true;
+        if ( isOnGround() ) {
+            movement.x += horizontalMultiplier*horizontalMovement;
+			movement.y += verticalMultiplier*verticalMovement;
+        	checkMovementBoundaries();
+			//Debug.Log("x_speed: " + movement.x + " y_speed: " + movement.y);
 		}
 
 	}
 
-	
-	private void slowDown(float amount)
-	{
-		movement.x += amount;
-		if (movement.x < minimumSpeed)
-			movement.x = minimumSpeed;
-	}
-
-	private void boost()
-	{
-		movement.x += boostAmount;
-	}
-
-	public void jump(float jumpTimer) {
+	/*public void jump(float jumpTimer) {
 
 		if (feetOnGround)
 		{
@@ -104,17 +63,39 @@ public class CharacterMovement : MonoBehaviour {
 			guiText.setJumpingDone(true);
 			animationHandler.activateJumpAnimation();
 		}
-	}
+	}*/
 
-	public void land()
-	{
-		feetOnGround = true;
+	public void land() {
+		isFeetOnGround = true;
 		animationHandler.deactivateJumpAnimation();
 	}
 
-	public void setJumpingAllowed(bool b)
-	{
-		feetOnGround = b;
+	public void setFeetOnGround(bool b) {
+		isFeetOnGround = b;
 	}
-
+	
+	/*
+	 * Returns true if the players feet are on ground.
+	 * Used to be named "getJumpingAllowed".
+	 */
+	public bool isOnGround() {
+		return isFeetOnGround;
+	}
+	
+	/*
+	 * Prevents the player from going faster than wanted
+	 */
+	private void checkMovementBoundaries() {
+		if (movement.x > maxSpeedX) {
+			movement.x = maxSpeedX;
+		} else if (movement.x < -maxSpeedX ) {
+			movement.x = -maxSpeedX;		
+		}
+		
+		if (movement.y > maxSpeedY) {
+			movement.y = maxSpeedY;
+		} else if (movement.y < -maxSpeedY) {
+			movement.y = -maxSpeedY;
+		}
+	}
 }
