@@ -9,7 +9,7 @@ using System.Collections;
 public class HUDJumpBooster : MonoBehaviour {
 
 	public Component playerCharacter;
-    private CharacterControl control;
+    private VectorCharacterControl control;
     private GUITexture guiText;
 	private CharacterMovement movement;
 
@@ -17,12 +17,10 @@ public class HUDJumpBooster : MonoBehaviour {
 	private float jumpBoost;
     private bool jumpingDone;
 
-	
-
 	// Use this for initialization
 	void Start () {
 
-		control = playerCharacter.GetComponent<CharacterControl>();
+		control = playerCharacter.GetComponent<VectorCharacterControl>();
         guiText = this.GetComponent<GUITexture>();
 		movement = playerCharacter.GetComponent<CharacterMovement>();
 
@@ -45,9 +43,9 @@ public class HUDJumpBooster : MonoBehaviour {
 	}
 	
 	public void startJumpBoost(){
-		jumpBoost = control.getJumpTime();
-	    guiText.color = Color.Lerp(Color.green, Color.red, (jumpBoost - control.minJumpTime));
-	    guiText.pixelInset = new Rect(-90, 19, (jumpBoost - control.minJumpTime) * 200, 18);
+		jumpBoost = control.getDragDistancePercent();
+	    guiText.color = Color.Lerp(Color.green, Color.red, jumpBoost);
+	    guiText.pixelInset = new Rect(-90, 19, jumpBoost * 200, 18);
 
 	}
 	
@@ -55,7 +53,6 @@ public class HUDJumpBooster : MonoBehaviour {
 		guiText.color -= new Color(0, 0, 0, 0.05f);
         if (guiText.color.a <= 0)
         {
-			control.setJumpTime(0);
            	jumpingDone = false;
        	}
 	}
