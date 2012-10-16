@@ -3,10 +3,13 @@ using System.Collections;
 
 public class PowerUpEspresso : PowerUpTemplate {
 
-    public Texture espressoText;
+	private bool itemCollected;
+
 	// Use this for initialization
 	public override void Start () {
-        
+
+		itemCollected = false;
+
 	}
 	
 	// Update is called once per frame
@@ -19,14 +22,19 @@ public class PowerUpEspresso : PowerUpTemplate {
         if (c.gameObject.name == "Player")
         {
             Destroy(gameObject);
-            powerUpOn();
+			setItemCollected(true);
         }
     }
 
-    public override void powerUpOn()
+    public override void setItemCollected(bool set)
     {
-        Graphics.DrawTexture(new Rect(10, 10, 600, 600), espressoText); // ?????
+		itemCollected = set;
     }
+	public override bool getItemCollected()
+	{
+		return itemCollected;
+	}
+
 
 
 }
