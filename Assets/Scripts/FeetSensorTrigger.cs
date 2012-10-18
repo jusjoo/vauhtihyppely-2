@@ -19,9 +19,15 @@ public class FeetSensorTrigger : MonoBehaviour {
 		movement.land();
 	}
 
+
 	void OnCollisionExit(Collision collision)
 	{
 		movement.setFeetOnGround(false);
+	}
+
+	void OnCollisionStay(Collision collision)
+	{
+		movement.land();
 	}
 	
 

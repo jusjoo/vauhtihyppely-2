@@ -3,6 +3,7 @@ using System.Collections;
 
 public abstract class PowerUpTemplate : MonoBehaviour {
 
+	public GameObject showPU;
 	// Use this for initialization
     public abstract void Start();
 
@@ -11,5 +12,7 @@ public abstract class PowerUpTemplate : MonoBehaviour {
 
     public abstract void OnTriggerEnter(Collider c);
 
-    public abstract void powerUpOn();
+    public abstract void setItemCollected(bool set);
+
+	public abstract bool getItemCollected();
 }

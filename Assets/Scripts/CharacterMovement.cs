@@ -7,6 +7,12 @@ public class CharacterMovement : MonoBehaviour {
 	
 	public float horizontalMultiplier;
 	public float verticalMultiplier;
+	public float airMovementFactor;
+
+	// Amount (in pixels) in vertical drag, that is ignored,
+	// to prevent unwanted jumps.
+	// Refactor this to use an angle instead of distance.
+	public float yDeadZone;
 	
 	public float maxSpeedX;
 	public float maxSpeedY;	
@@ -43,12 +49,28 @@ public class CharacterMovement : MonoBehaviour {
 	
 	public void move(float horizontalMovement, float verticalMovement) {
 
-        if ( isOnGround() ) {
-            movement.x += horizontalMultiplier*horizontalMovement;
-			movement.y += verticalMultiplier*verticalMovement;
-        	checkMovementBoundaries();
-			//Debug.Log("x_speed: " + movement.x + " y_speed: " + movement.y);
+		// To prevent unwanted jumps
+		if ( Mathf.Abs(verticalMovement) < yDeadZone ) {
+			verticalMovement = 0;
 		}
+		
+		if ( isOnGround() ) {
+			// Player is on the ground. Normal controls
+			movement.x += horizontalMultiplier*horizontalMovement;
+			movement.y += verticalMultiplier*verticalMovement;
+
+		} else {
+			// Player is in the air, can only slow down x-speed.
+			// Not possible to jump.
+			if ( (horizontalMovement > 0 && rigidbody.velocity.x < 0) ||
+				 (horizontalMovement < 0 && rigidbody.velocity.x > 0) ) {
+				Debug.Log("I'm braking in the air");
+				movement.x += airMovementFactor*horizontalMultiplier*horizontalMovement;			
+			}
+		}
+		
+    	checkMovementBoundaries();
+		//Debug.Log("x_speed: " + movement.x + " y_speed: " + movement.y);
 
 	}
 

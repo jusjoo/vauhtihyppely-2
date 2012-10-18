@@ -25,7 +25,15 @@ public class AnimationStateHandler : MonoBehaviour {
 
 		if (jumping)
 		{
-			animator.setAnimationState(SpriteAnimator.AnimationState.Jump);
+
+			if (body.velocity.y >= -2)
+			{
+				animator.setAnimationState(SpriteAnimator.AnimationState.Jump);
+			}
+			else
+			{
+				animator.setAnimationState(SpriteAnimator.AnimationState.Fall);
+			}
 		}
 		else
 		{

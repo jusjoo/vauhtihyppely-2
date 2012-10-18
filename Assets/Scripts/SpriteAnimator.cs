@@ -4,14 +4,17 @@ using System.Collections.Generic;
 
 public class SpriteAnimator : MonoBehaviour {
 
+	public List<Texture2D> idleTextures;
+	public float idleFrameLength;
+	
 	public List<Texture2D> runTextures;
 	public float runFrameLength;
 
-	public List<Texture2D> boostTextures;
-	public float boostAnimationLength;
-
 	public List<Texture2D> jumpTextures;
 	public float jumpAnimationLength;
+
+	public List<Texture2D> fallTextures;
+	public float fallFrameLength;
 
 	// time spent in current animation state
 	private float animationStateTime;
@@ -20,13 +23,13 @@ public class SpriteAnimator : MonoBehaviour {
     // will the sprite be flipped
     private bool flipped;
 
-	public enum AnimationState { Idle, Run, Jump, Boost }
+	public enum AnimationState { Idle, Run, Jump, Fall }
 
 	
 
 	// Use this for initialization
 	void Start () {
-		setAnimationState(AnimationState.Run);
+		setAnimationState(AnimationState.Idle);
 	}
 	
 	// Update is called once per frame
@@ -40,14 +43,14 @@ public class SpriteAnimator : MonoBehaviour {
             if (transform.localScale.z > 0)
             {
  
-                transform.localScale += new Vector3(0, 0, -2f);
+                transform.localScale += new Vector3(0, 0, -transform.localScale.z*2);
             }
         }
        else
         {
             if (transform.localScale.z < 0)
             {
-                transform.localScale += new Vector3(0, 0, 2f);
+				transform.localScale += new Vector3(0, 0, -transform.localScale.z * 2);
             }
         }
 
@@ -60,13 +63,20 @@ public class SpriteAnimator : MonoBehaviour {
 
 		if (currentAnimation == AnimationState.Idle)
 		{
-			this.renderer.material.mainTexture = runTextures[0];
+			checkLoop(idleFrameLength * idleTextures.Count);
+			this.renderer.material.mainTexture = idleTextures[(int)Mathf.Floor(animationStateTime / idleFrameLength)];
 		}
 
 		if (currentAnimation == AnimationState.Jump)
 		{
 			checkLoop(jumpAnimationLength * jumpTextures.Count);
 			this.renderer.material.mainTexture = jumpTextures[(int)Mathf.Floor((animationStateTime / jumpTextures.Count) / jumpAnimationLength)];
+		}
+
+		if (currentAnimation == AnimationState.Fall)
+		{
+			checkLoop(fallFrameLength * fallTextures.Count);
+			this.renderer.material.mainTexture = fallTextures[(int)Mathf.Floor(animationStateTime / fallFrameLength)];
 		}
 
 	}
