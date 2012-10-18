@@ -3,6 +3,7 @@ using System.Collections;
 
 public abstract class PowerUpTemplate : MonoBehaviour {
 
+	public GameObject showPU;
 	// Use this for initialization
     public abstract void Start();
 
