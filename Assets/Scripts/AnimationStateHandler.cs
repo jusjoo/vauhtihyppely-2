@@ -5,7 +5,6 @@ public class AnimationStateHandler : MonoBehaviour {
 
 	public float runVelocity;
 	
-
 	private SpriteAnimator animator;
 	private Rigidbody body;
 	private bool jumping;
@@ -54,6 +53,7 @@ public class AnimationStateHandler : MonoBehaviour {
 	public void activateJumpAnimation() {
 		jumping = true;
 	}
+	
 	public void deactivateJumpAnimation()
 	{
 		jumping = false;
@@ -63,4 +63,13 @@ public class AnimationStateHandler : MonoBehaviour {
     {
         animator.flip(b);
     }
+	
+	public void setRunFactor(float runFactor) 
+	{
+		if ( runFactor < 0.3 ) {
+			runFactor += 0.3f;	
+		}
+
+		animator.setRunFactor( runFactor );
+	}
 }

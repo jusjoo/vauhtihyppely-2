@@ -1,0 +1,14 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\AnimationStateHandler.cs">
+    <Files>
+      <File FileName="Assets\Scripts\SpriteAnimator.cs" Line="65" Column="89" />
+      <File FileName="Assets\Scripts\CharacterMovement.cs" Line="113" Column="4" />
+      <File FileName="Assets\Scripts\AnimationStateHandler.cs" Line="70" Column="13" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
