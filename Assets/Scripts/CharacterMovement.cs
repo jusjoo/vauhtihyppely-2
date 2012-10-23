@@ -115,9 +115,9 @@ public class CharacterMovement : MonoBehaviour {
 			movement.x = 0;		
 		}
 		
-		if (rigidbody.velocity.y > maxSpeedY) {
+		if (movement.y > maxSpeedY) {
 			movement.y = maxSpeedY;
-		} else if (rigidbody.velocity.y < -maxSpeedY) {
+		} else if (movement.y < -maxSpeedY) {
 			movement.y = -maxSpeedY;
 		}
 	}

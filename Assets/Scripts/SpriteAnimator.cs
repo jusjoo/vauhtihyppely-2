@@ -32,14 +32,21 @@ public class SpriteAnimator : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		//runFactor = 0;
+		runFactor=0;
 		setAnimationState(AnimationState.Idle);
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		
+		if (currentAnimation == AnimationState.Run)
+		{
+			animationStateTime += Time.deltaTime*runFactor;
+		} else {
+			animationStateTime += Time.deltaTime;
+		}
+		
 
-		animationStateTime += Time.deltaTime*runFactor;
 
         if (flipped)
         {
@@ -63,7 +70,6 @@ public class SpriteAnimator : MonoBehaviour {
 		{
 			checkLoop(runFrameLength * runTextures.Count);
 			this.renderer.material.mainTexture = runTextures[(int)Mathf.Floor((animationStateTime) / runFrameLength)];
-			//this.renderer.material.mainTexture = runTextures[(int)Mathf.Floor(animationStateTime / runFrameLength)];
 	
 		} else if ( currentAnimation == AnimationState.Idle )
 		{
@@ -115,6 +121,5 @@ public class SpriteAnimator : MonoBehaviour {
 	public void setRunFactor(float factor) 
 	{
 		runFactor = factor;
-		Debug.Log(runFactor);
 	}
 }
