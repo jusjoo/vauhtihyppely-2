@@ -3,6 +3,7 @@ using System.Collections;
 
 public class PowerUpEspresso : PowerUpTemplate {
 
+
 	private bool itemCollected;
 	private float fader;
 	private float fadeTimer;
@@ -11,14 +12,13 @@ public class PowerUpEspresso : PowerUpTemplate {
 	public override void Start () {
 
 		itemCollected = false;
-
 	}
 	
 	// Update is called once per frame
 	public override void Update () {
 		if (getItemCollected() == true)
 		{
-			showCollectedItem();
+			fadeCollectedItem();
 		}
 
 	}
@@ -28,8 +28,9 @@ public class PowerUpEspresso : PowerUpTemplate {
         if (c.gameObject.name == "Player")
         {
 			setItemCollected(true);
-			GameObject.Instantiate(showPU, this.transform.position, this.transform.rotation);
+			GameObject.Instantiate(showPU, this.transform.position, showPU.transform.rotation);
 			Destroy(gameObject);
+			fadeCollectedItem();
         }
     }
 
@@ -41,8 +42,10 @@ public class PowerUpEspresso : PowerUpTemplate {
 	{
 		return itemCollected;
 	}
-	public void showCollectedItem()
+	public void fadeCollectedItem()
 	{
+		Debug.Log("DOPPIOO");
+		renderer.material.SetColor("_Color", Color.green);
 		fadeTimer -= Time.deltaTime;
 		fader -= 0.2f;
 	
