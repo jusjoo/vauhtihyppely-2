@@ -71,4 +71,8 @@ public class AnimationStateHandler : MonoBehaviour {
     {
         animator.flip(b);
     }
+	
+	public void setRunFactor(float runFactor) {
+		animator.setRunFactor(runFactor);
+	}
 }
