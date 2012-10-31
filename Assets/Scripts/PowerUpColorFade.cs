@@ -5,15 +5,14 @@ public class PowerUpColorFade : MonoBehaviour {
 
     private float fadeTimer;
     private float fader;
-    private Color fadeStart;
-    private Color fadeEnd;
     private Transform target;
+
+    private Color fadeAmount;
 
 	// Use this for initialization
 	void Start () {
 
-        fadeStart = Color.red;
-        fadeEnd = Color.clear;
+  
         fadeTimer = 2.0f;
         target.position = new Vector3(this.transform.position.x, this.transform.position.y + 5, this.transform.position.z);
 	}
@@ -22,6 +21,8 @@ public class PowerUpColorFade : MonoBehaviour {
 	void Update () {
        fadeCollectedItem();
        //transform.position = Vector3.Lerp(transform.position, target.position, Time.deltaTime * fadeTimer);
+
+       transform.position += new Vector3(0.05f, 0.01f, 0);
 	}
 
     public void fadeCollectedItem(){
@@ -32,7 +33,8 @@ public class PowerUpColorFade : MonoBehaviour {
         }
         else
         {
-            renderer.material.color -= new Color(0, 0, 0, 0.01f);
+            fadeAmount += new Color(0, 0, 0, 0.0001f);
+            renderer.material.color -= fadeAmount;
         }
 
 	}
