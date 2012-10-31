@@ -16,10 +16,6 @@ public class PowerUpEspresso : PowerUpTemplate {
 	
 	// Update is called once per frame
 	public override void Update () {
-		if (getItemCollected() == true)
-		{
-			fadeCollectedItem();
-		}
 
 	}
 
@@ -28,9 +24,8 @@ public class PowerUpEspresso : PowerUpTemplate {
         if (c.gameObject.name == "Player")
         {
 			setItemCollected(true);
-			GameObject.Instantiate(showPU, this.transform.position, showPU.transform.rotation);
+			GameObject.Instantiate(showPU, new Vector3(this.transform.position.x, this.transform.position.y+2, this.transform.position.z), showPU.transform.rotation);
 			Destroy(gameObject);
-			fadeCollectedItem();
         }
     }
 
@@ -42,15 +37,5 @@ public class PowerUpEspresso : PowerUpTemplate {
 	{
 		return itemCollected;
 	}
-	public void fadeCollectedItem()
-	{
-		Debug.Log("DOPPIOO");
-		renderer.material.SetColor("_Color", Color.green);
-		fadeTimer -= Time.deltaTime;
-		fader -= 0.2f;
-	
-	}
-
-
 
 }
