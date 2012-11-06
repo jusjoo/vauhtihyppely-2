@@ -41,6 +41,7 @@ public class CharacterMovement : MonoBehaviour {
 	
 		// Turn player's face to the direction where it is moving
         animationHandler.flip(rigidbody.velocity.x < 0);
+		animationHandler.setRunFactor(rigidbody.velocity.x / maxSpeedX );
 		
 		if ( ! isOnGround() ) {
 			animationHandler.activateJumpAnimation();
@@ -108,10 +109,10 @@ public class CharacterMovement : MonoBehaviour {
 	 * Prevents the player from going faster than wanted
 	 */
 	private void checkMovementBoundaries() {
-		if (movement.x > maxSpeedX) {
-			movement.x = maxSpeedX;
-		} else if (movement.x < -maxSpeedX ) {
-			movement.x = -maxSpeedX;		
+		if (rigidbody.velocity.x > maxSpeedX && movement.x > 0) {
+			movement.x = 0;
+		} else if (rigidbody.velocity.x < -maxSpeedX && movement.x < 0) {
+			movement.x = 0;		
 		}
 		
 		if (movement.y > maxSpeedY) {
