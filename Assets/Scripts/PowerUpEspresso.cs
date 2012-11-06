@@ -4,19 +4,20 @@ using System.Collections;
 public class PowerUpEspresso : PowerUpTemplate {
 
 
-	private bool itemCollected;
+	
 	private float fader;
 	private float fadeTimer;
+	private bool setToDestroy;
 
-	// Use this for initialization
-	public override void Start () {
-
-		itemCollected = false;
-	}
 	
 	// Update is called once per frame
 	public override void Update () {
 
+		if (setToDestroy == true)
+		{
+			setToDestroy = false;
+			Destroy(gameObject);
+		}
 	}
 
     public override void OnTriggerEnter(Collider c)
@@ -25,7 +26,8 @@ public class PowerUpEspresso : PowerUpTemplate {
         {
 			setItemCollected(true);
 			GameObject.Instantiate(showPU, new Vector3(this.transform.position.x, this.transform.position.y+2, this.transform.position.z), showPU.transform.rotation);
-			Destroy(gameObject);
+			setToDestroy = true;
+			powerUpStateHandler.activatePowerUp("DoubleJump");
         }
     }
 
