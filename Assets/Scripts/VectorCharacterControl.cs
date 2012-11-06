@@ -26,8 +26,6 @@ public class VectorCharacterControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		//Debug.Log("feet on ground: " + movementHandler.isOnGround());
-	
 		if ( Input.GetMouseButtonDown(0) && ! isMouseDown )	{
 			// Mouse was pressed down
 			isMouseDown = true;
@@ -40,7 +38,7 @@ public class VectorCharacterControl : MonoBehaviour {
 		}
 
 		// Mouse was released or maximum drag distance achieved
-		if ( ( Input.GetMouseButtonUp(0) && isMouseDown ) || ( getDragDistance() >= maxDragDistance ) ) {
+		if ( Input.GetMouseButtonUp(0) && isMouseDown ) {
 			isMouseDown = false;
 			sendMovement(horizontalOffset, verticalOffset);
 			horizontalOffset = 0;

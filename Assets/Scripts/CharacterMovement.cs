@@ -65,7 +65,6 @@ public class CharacterMovement : MonoBehaviour {
 			// Not possible to jump.
 			if ( (horizontalMovement > 0 && rigidbody.velocity.x < 0) ||
 				 (horizontalMovement < 0 && rigidbody.velocity.x > 0) ) {
-				Debug.Log("I'm braking in the air");
 				movement.x += airMovementFactor*horizontalMultiplier*horizontalMovement;			
 			}
 		}
