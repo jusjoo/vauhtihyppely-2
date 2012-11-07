@@ -50,11 +50,8 @@ public class HUDJumpBooster : MonoBehaviour {
 	}
 	
 	public void fadeJumpBoostMeter(){
-		guiText.color -= new Color(0, 0, 0, 0.05f);
-        if (guiText.color.a <= 0)
-        {
-           	jumpingDone = false;
-       	}
+		guiText.color -= new Color(0, 0, 0, 0.01f);
+       
 	}
 	
     public void setJumpingDone(bool done){

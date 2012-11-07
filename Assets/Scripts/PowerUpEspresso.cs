@@ -3,30 +3,41 @@ using System.Collections;
 
 public class PowerUpEspresso : PowerUpTemplate {
 
-    public Texture espressoText;
-	// Use this for initialization
-	public override void Start () {
-        
-	}
+
+	
+	private float fader;
+	private float fadeTimer;
+	private bool setToDestroy;
+
 	
 	// Update is called once per frame
 	public override void Update () {
-	
+
+		if (setToDestroy == true)
+		{
+			setToDestroy = false;
+			Destroy(gameObject);
+		}
 	}
 
     public override void OnTriggerEnter(Collider c)
     {
         if (c.gameObject.name == "Player")
         {
-            Destroy(gameObject);
-            powerUpOn();
+			setItemCollected(true);
+			GameObject.Instantiate(showPU, new Vector3(this.transform.position.x, this.transform.position.y+2, this.transform.position.z), showPU.transform.rotation);
+			setToDestroy = true;
+			powerUpStateHandler.activatePowerUp("DoubleJump");
         }
     }
 
-    public override void powerUpOn()
+    public override void setItemCollected(bool set)
     {
-        Graphics.DrawTexture(new Rect(10, 10, 600, 600), espressoText); // ?????
+		itemCollected = set;
     }
-
+	public override bool getItemCollected()
+	{
+		return itemCollected;
+	}
 
 }

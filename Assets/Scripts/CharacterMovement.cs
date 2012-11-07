@@ -21,15 +21,19 @@ public class CharacterMovement : MonoBehaviour {
 
 	private bool jumping;
 	private bool isFeetOnGround;
+	private bool doubleJumpAvailable;
 
 	private Rigidbody rigidbody;
     private HUDJumpBooster guiText;
 	private AnimationStateHandler animationHandler;
+	private PowerUpStateHandler powerUpStateHandler;
 
 	void Start () {
 		rigidbody = this.GetComponent<Rigidbody>();
         guiText = GameObject.Find("JumpBooster").GetComponent<HUDJumpBooster>();
 		animationHandler = this.GetComponent<AnimationStateHandler>();
+		powerUpStateHandler = this.GetComponent<PowerUpStateHandler>();
+		doubleJumpAvailable = true;
 	}
 
 	void Update () {
@@ -41,6 +45,7 @@ public class CharacterMovement : MonoBehaviour {
 	
 		// Turn player's face to the direction where it is moving
         animationHandler.flip(rigidbody.velocity.x < 0);
+		animationHandler.setRunFactor(rigidbody.velocity.x / maxSpeedX );
 		
 		if ( ! isOnGround() ) {
 			animationHandler.activateJumpAnimation();
@@ -54,7 +59,7 @@ public class CharacterMovement : MonoBehaviour {
 			verticalMovement = 0;
 		}
 		
-		if ( isOnGround() ) {
+		if ( isOnGround() || doubleJumpActive()) {
 			// Player is on the ground. Normal controls
 			movement.x += horizontalMultiplier*horizontalMovement;
 			movement.y += verticalMultiplier*verticalMovement;
@@ -64,32 +69,18 @@ public class CharacterMovement : MonoBehaviour {
 			// Not possible to jump.
 			if ( (horizontalMovement > 0 && rigidbody.velocity.x < 0) ||
 				 (horizontalMovement < 0 && rigidbody.velocity.x > 0) ) {
-				Debug.Log("I'm braking in the air");
 				movement.x += airMovementFactor*horizontalMultiplier*horizontalMovement;			
 			}
 		}
 		
     	checkMovementBoundaries();
-		//Debug.Log("x_speed: " + movement.x + " y_speed: " + movement.y);
 
 	}
-
-	/*public void jump(float jumpTimer) {
-
-		if (feetOnGround)
-		{
-			jumpHeight = jumpTimer * jumpHeightMultiplier;
-			jumping = true;
-			
-			// update gui and animation
-			guiText.setJumpingDone(true);
-			animationHandler.activateJumpAnimation();
-		}
-	}*/
 
 	public void land() {
 		isFeetOnGround = true;
 		animationHandler.deactivateJumpAnimation();
+		doubleJumpAvailable = true;
 	}
 
 	public void setFeetOnGround(bool b) {
@@ -103,15 +94,26 @@ public class CharacterMovement : MonoBehaviour {
 	public bool isOnGround() {
 		return isFeetOnGround;
 	}
+
+	private bool doubleJumpActive() {
+		if(powerUpStateHandler.isPowerUpOn("DoubleJump")){
+			if (doubleJumpAvailable) {
+				doubleJumpAvailable = false;
+				return true;
+			}
+		}
+		return false;
+	}
+
 	
 	/*
 	 * Prevents the player from going faster than wanted
 	 */
 	private void checkMovementBoundaries() {
-		if (movement.x > maxSpeedX) {
-			movement.x = maxSpeedX;
-		} else if (movement.x < -maxSpeedX ) {
-			movement.x = -maxSpeedX;		
+		if (rigidbody.velocity.x > maxSpeedX && movement.x > 0) {
+			movement.x = 0;
+		} else if (rigidbody.velocity.x < -maxSpeedX && movement.x < 0) {
+			movement.x = 0;		
 		}
 		
 		if (movement.y > maxSpeedY) {
@@ -120,4 +122,5 @@ public class CharacterMovement : MonoBehaviour {
 			movement.y = -maxSpeedY;
 		}
 	}
+
 }

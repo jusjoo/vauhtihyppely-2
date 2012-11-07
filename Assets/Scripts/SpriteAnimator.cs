@@ -4,14 +4,17 @@ using System.Collections.Generic;
 
 public class SpriteAnimator : MonoBehaviour {
 
+	public List<Texture2D> idleTextures;
+	public float idleFrameLength;
+	
 	public List<Texture2D> runTextures;
 	public float runFrameLength;
 
-	public List<Texture2D> boostTextures;
-	public float boostAnimationLength;
-
 	public List<Texture2D> jumpTextures;
 	public float jumpAnimationLength;
+
+	public List<Texture2D> fallTextures;
+	public float fallFrameLength;
 
 	// time spent in current animation state
 	private float animationStateTime;
@@ -19,20 +22,31 @@ public class SpriteAnimator : MonoBehaviour {
 
     // will the sprite be flipped
     private bool flipped;
-
-	public enum AnimationState { Idle, Run, Jump, Boost }
+	
+	/* Factor of 0..1 how fast the player is runnings */
+	private float runFactor;
+	
+	public enum AnimationState { Idle, Run, Jump, Fall }
 
 	
 
 	// Use this for initialization
 	void Start () {
-		setAnimationState(AnimationState.Run);
+		runFactor=0;
+		setAnimationState(AnimationState.Idle);
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		
+		if (currentAnimation == AnimationState.Run)
+		{
+			animationStateTime += Time.deltaTime*runFactor;
+		} else {
+			animationStateTime += Time.deltaTime;
+		}
+		
 
-		animationStateTime += Time.deltaTime;
 
         if (flipped)
         {
@@ -40,14 +54,14 @@ public class SpriteAnimator : MonoBehaviour {
             if (transform.localScale.z > 0)
             {
  
-                transform.localScale += new Vector3(0, 0, -2f);
+                transform.localScale += new Vector3(0, 0, -transform.localScale.z*2);
             }
         }
        else
         {
             if (transform.localScale.z < 0)
             {
-                transform.localScale += new Vector3(0, 0, 2f);
+				transform.localScale += new Vector3(0, 0, -transform.localScale.z * 2);
             }
         }
 
@@ -55,18 +69,27 @@ public class SpriteAnimator : MonoBehaviour {
 		if (currentAnimation == AnimationState.Run)
 		{
 			checkLoop(runFrameLength * runTextures.Count);
-			this.renderer.material.mainTexture = runTextures[(int)Mathf.Floor(animationStateTime / runFrameLength)];
-		}
-
-		if (currentAnimation == AnimationState.Idle)
+			Debug.Log( (int)Mathf.Floor((animationStateTime) / runFrameLength) );
+			this.renderer.material.mainTexture = runTextures[(int)Mathf.Floor((animationStateTime) / runFrameLength)];
+	
+		} else if ( currentAnimation == AnimationState.Idle )
 		{
-			this.renderer.material.mainTexture = runTextures[0];
-		}
+			checkLoop(idleFrameLength * idleTextures.Count);
+			this.renderer.material.mainTexture = idleTextures[(int)Mathf.Floor(animationStateTime / idleFrameLength)];				
 
-		if (currentAnimation == AnimationState.Jump)
+		} else if (currentAnimation == AnimationState.Jump)
 		{
 			checkLoop(jumpAnimationLength * jumpTextures.Count);
 			this.renderer.material.mainTexture = jumpTextures[(int)Mathf.Floor((animationStateTime / jumpTextures.Count) / jumpAnimationLength)];
+		
+		} else if (currentAnimation == AnimationState.Fall)
+		{
+			checkLoop(fallFrameLength * fallTextures.Count);
+			this.renderer.material.mainTexture = fallTextures[(int)Mathf.Floor(animationStateTime / fallFrameLength)];
+
+		} else {
+			// This shouldn't happen
+			Debug.Log("ERROR - else animation!");
 		}
 
 	}
@@ -95,4 +118,9 @@ public class SpriteAnimator : MonoBehaviour {
         
         this.flipped = b;
     }
+	
+	public void setRunFactor(float factor) 
+	{
+		runFactor = Mathf.Abs( factor );
+	}
 }

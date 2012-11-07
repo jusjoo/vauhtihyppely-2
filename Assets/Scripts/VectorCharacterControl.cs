@@ -25,8 +25,6 @@ public class VectorCharacterControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-		//Debug.Log("feet on ground: " + movementHandler.isOnGround());
 	
 		if ( Input.GetMouseButtonDown(0) && ! isMouseDown )	{
 			// Mouse was pressed down
