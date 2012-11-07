@@ -110,10 +110,17 @@ public class CharacterMovement : MonoBehaviour {
 	 * Prevents the player from going faster than wanted
 	 */
 	private void checkMovementBoundaries() {
+		// We can't set the movement.x value directly,
+		// for example movement.x = 300 won't work.
+		// Because of this we use a workaround.
+		
 		if (rigidbody.velocity.x > maxSpeedX && movement.x > 0) {
-			movement.x = 0;
+			// Workaround: With this added amount the movement.x
+			// will be equal to maxSpeedX.
+			movement.x = maxSpeedX - rigidbody.velocity.x;
 		} else if (rigidbody.velocity.x < -maxSpeedX && movement.x < 0) {
-			movement.x = 0;		
+			// Workaround
+			movement.x = -(maxSpeedX - rigidbody.velocity.x);
 		}
 		
 		if (movement.y > maxSpeedY) {
