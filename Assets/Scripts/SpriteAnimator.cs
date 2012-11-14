@@ -69,7 +69,6 @@ public class SpriteAnimator : MonoBehaviour {
 		if (currentAnimation == AnimationState.Run)
 		{
 			checkLoop(runFrameLength * runTextures.Count);
-			Debug.Log( (int)Mathf.Floor((animationStateTime) / runFrameLength) );
 			this.renderer.material.mainTexture = runTextures[(int)Mathf.Floor((animationStateTime) / runFrameLength)];
 	
 		} else if ( currentAnimation == AnimationState.Idle )
@@ -89,7 +88,7 @@ public class SpriteAnimator : MonoBehaviour {
 
 		} else {
 			// This shouldn't happen
-			Debug.Log("ERROR - else animation!");
+			Debug.Log("ERROR in animation!");
 		}
 
 	}
