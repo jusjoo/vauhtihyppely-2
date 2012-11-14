@@ -52,12 +52,14 @@
      <Compile Include="Assets\Scripts\DisposeOnAnyKey.cs" />
      <Compile Include="Assets\Scripts\EffectAnimator.cs" />
      <Compile Include="Assets\Scripts\FallingDeathHandler.cs" />
+     <Compile Include="Assets\Scripts\FallingPlatformScript.cs" />
      <Compile Include="Assets\Scripts\FeetSensorTrigger.cs" />
      <Compile Include="Assets\Scripts\GUIMessageTrigger.cs" />
      <Compile Include="Assets\Scripts\HUDJumpBooster.cs" />
      <Compile Include="Assets\Scripts\LevelChooserButton.cs" />
      <Compile Include="Assets\Scripts\LevelCompletion.cs" />
      <Compile Include="Assets\Scripts\PixelArtImporter.cs" />
+     <Compile Include="Assets\Scripts\PowerUpBlackCoffee.cs" />
      <Compile Include="Assets\Scripts\PowerUpColorFade.cs" />
      <Compile Include="Assets\Scripts\PowerUpEspresso.cs" />
      <Compile Include="Assets\Scripts\PowerUpStateHandler.cs" />

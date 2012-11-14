@@ -2,13 +2,8 @@ using UnityEngine;
 using System.Collections;
 
 public class PowerUpEspresso : PowerUpTemplate {
-
-
 	
-	private float fader;
-	private float fadeTimer;
 	private bool setToDestroy;
-
 	
 	// Update is called once per frame
 	public override void Update () {
