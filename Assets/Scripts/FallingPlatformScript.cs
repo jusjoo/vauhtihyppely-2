@@ -25,15 +25,17 @@ public class FallingPlatformScript : MonoBehaviour {
 			}
 			else
 			{
-				Debug.Log("gravityyy");
+				
 				gameObject.GetComponent<Rigidbody>().useGravity = true;
+				gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ
+					| RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
 			}
 
 		}
 
 	}
 
-	void onCollisionEnter(Collider c)
+	void OnCollisionEnter(Collision c)
 	{
 		if (!triggered && c.gameObject.name == "Player")
 		{
