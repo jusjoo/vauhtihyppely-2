@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+//Used for fading the power up "check" text
 public class PowerUpColorFade : MonoBehaviour {
 
     private float fadeTimer;

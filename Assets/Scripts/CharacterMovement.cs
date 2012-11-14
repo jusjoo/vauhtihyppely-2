@@ -22,6 +22,7 @@ public class CharacterMovement : MonoBehaviour {
 	private bool jumping;
 	private bool isFeetOnGround;
 	private bool doubleJumpAvailable;
+	private bool blackCoffeeAvailable;
 
 	private Rigidbody rigidbody;
     private HUDJumpBooster guiText;
@@ -34,12 +35,13 @@ public class CharacterMovement : MonoBehaviour {
 		animationHandler = this.GetComponent<AnimationStateHandler>();
 		powerUpStateHandler = this.GetComponent<PowerUpStateHandler>();
 		doubleJumpAvailable = true;
+		blackCoffeeAvailable = true;
 	}
 
 	void Update () {
 		
 		// calculate the movement force given from controllers
-		Vector3 deltaMove = new Vector3(movement.x, movement.y, movement.z) * Time.deltaTime ;
+		Vector3 deltaMove = new Vector3(movement.x, movement.y, movement.z) * Time.deltaTime/Time.timeScale ;
 		rigidbody.AddForce (deltaMove);
 		movement =- deltaMove;
 	
@@ -50,6 +52,8 @@ public class CharacterMovement : MonoBehaviour {
 		if ( ! isOnGround() ) {
 			animationHandler.activateJumpAnimation();
 		}
+		if (blackCoffeeActive())
+			activateBlackCoffee();
 	}
 	
 	public void move(float horizontalMovement, float verticalMovement) {
@@ -105,7 +109,19 @@ public class CharacterMovement : MonoBehaviour {
 		return false;
 	}
 
-	
+	private bool blackCoffeeActive(){
+		if (powerUpStateHandler.isPowerUpOn("BlackCoffee")){
+			if (blackCoffeeAvailable){
+				blackCoffeeAvailable = false;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private void activateBlackCoffee(){
+		Time.timeScale = 0.2f;
+	}
 	/*
 	 * Prevents the player from going faster than wanted
 	 */
