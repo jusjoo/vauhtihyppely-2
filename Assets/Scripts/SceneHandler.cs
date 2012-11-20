@@ -10,30 +10,36 @@ public class SceneHandler : MonoBehaviour {
 	 */
 	private static int currentLevelNumber = 2;
 	
-	private int lastSceneNumber;	
+	/**
+	 * How many levels do we have?
+	 * At the moments 3 levels, but aiming for 6.
+	 */
+	private int lastLevelNumber;
+
 	/*
 	 * The offset in Build Settings from the Level 1 to the index of the level.
-	 * For examle, currently Level 1 has the index 2 
-	 * => offset = 1.
+	 * For examle, currently Level 1 has the index 3 
+	 * => offset = 2.
 	 */
-	private int offsetFromFirstLevel = 1;
+	private int offsetFromFirstLevel = 2;
 	
 	/* */
 	private int deathScene;
 	
 	private int mainMenuScene;
 	
+	private int gameFinishedScene;
+	
 	// Use this for initialization
 	void Start () {
+		mainMenuScene = 0;		
 		deathScene = 1;
-		//currentLevelNumber = 1;
-		mainMenuScene = 0;
-		lastSceneNumber = 3;
+		gameFinishedScene = 2;
+		lastLevelNumber = 3;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log("currentlevelnumber from update " + currentLevelNumber);
 	}
 	
 	/**
@@ -43,12 +49,12 @@ public class SceneHandler : MonoBehaviour {
 		
 		currentLevelNumber++;
 		
-		if ( currentLevelNumber <= lastSceneNumber ) {
+		if ( currentLevelNumber <= lastLevelNumber ) {
 			LoadCurrentLevel();
 		} else {
 			// TODO peli pelattu onnellisesti loppuun scene
 			Debug.Log ("peli pelattu läpi");
-			Application.LoadLevel(mainMenuScene);			
+			Application.LoadLevel(gameFinishedScene);			
 		}
 	}
 	
@@ -69,5 +75,9 @@ public class SceneHandler : MonoBehaviour {
 		Debug.Log("game start from scene handler");
 		currentLevelNumber = 1;
 		Application.LoadLevel( (currentLevelNumber + offsetFromFirstLevel) );
+	}
+	
+	public void LoadMainMenu() {
+		Application.LoadLevel (mainMenuScene);
 	}
 }
