@@ -3,7 +3,8 @@ using System.Collections;
 
 public class DeathBallTrigger : MonoBehaviour
 {
-	//  How many seconds the ball will fall without moving forward in x-direction
+	// How many seconds the ball will fall with extra "gravity"
+	// and we slowly speed up the forward movement
 	public float freeFallTime = 0.5f;
 	
 	public float deathBallSpeed = 0.05f;
@@ -28,11 +29,18 @@ public class DeathBallTrigger : MonoBehaviour
         if (triggeredBall)
         {
             if ( fallenTime > freeFallTime ) {
-				// Move the door
+				// Move the ball forward
             	deathBall.transform.position += new Vector3(deathBallSpeed, 0.0f, 0f);
 			} else {
 				// Still in free fall
-				fallenTime += Time.deltaTime;	
+				fallenTime += Time.deltaTime;
+				
+				// ... actually free fall is not enough. Let's speed up the falling.
+				float dropAmount = -1.9f *Time.deltaTime;
+				
+				// ... also, slowly start moving the ball forward.
+				float moveForwardAmount = deathBallSpeed* (fallenTime/freeFallTime);
+				deathBall.transform.position += new Vector3(moveForwardAmount, dropAmount, 0f);
 			}
 		}
 
