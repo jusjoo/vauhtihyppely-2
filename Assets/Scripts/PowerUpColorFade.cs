@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+//Used for fading the power up "check" text
 public class PowerUpColorFade : MonoBehaviour {
 
     private float fadeTimer;
@@ -14,7 +15,7 @@ public class PowerUpColorFade : MonoBehaviour {
 
   
         fadeTimer = 2.0f;
-        target.position = new Vector3(this.transform.position.x, this.transform.position.y + 5, this.transform.position.z);
+		target.position = new Vector3(this.transform.position.x, this.transform.position.y + 5, this.transform.position.z);
 	}
 	
 	// Update is called once per frame

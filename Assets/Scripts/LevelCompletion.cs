@@ -4,10 +4,12 @@ using System.Collections;
 public class LevelCompletion : MonoBehaviour {
 
 	private GameObject exitObject;
-
+	private SceneHandler sceneHandler;
+	
 	// Use this for initialization
 	void Start () {
 		exitObject = GameObject.Find("LevelEnd");
+		sceneHandler = GameObject.Find("Player").GetComponent<SceneHandler>();
 	}
 	
 	// Update is called once per frame
@@ -19,7 +21,7 @@ public class LevelCompletion : MonoBehaviour {
 	{
 		if (collision.gameObject == exitObject)
 		{
-			Application.LoadLevel(0);
+			sceneHandler.LoadNextLevel();
 		}
 	}
 

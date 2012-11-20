@@ -18,11 +18,11 @@ public class PowerUpStateHandler : MonoBehaviour {
 	}
 
 	public void activatePowerUp(string type){
+		powerUps.Clear();
 		powerUps.Add(type);
 	}
 
 	public bool isPowerUpOn(string type){
-		Debug.Log("type == isactive" + powerUps.Contains(type));
 		return (powerUps.Contains(type));
 	}
 }
