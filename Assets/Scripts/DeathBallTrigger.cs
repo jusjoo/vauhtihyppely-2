@@ -3,18 +3,21 @@ using System.Collections;
 
 public class DeathBallTrigger : MonoBehaviour
 {
-
+	//  How many seconds the ball will fall without moving forward in x-direction
+	public float freeFallTime = 0.5f;
+	
+	public float deathBallSpeed = 0.05f;
+	public string elementNameToActivate = "deathBall";
+	
+	private float fallenTime;
     private GameObject deathBall;
-  
     private bool triggeredBall;
-
-    public float deathBallSpeed = 0.05f;
-
+	
     // Use this for initialization
     void Start()
     {
-        deathBall = GameObject.Find("deathBall");
-        //timeToMove = 0; // in seconds
+        deathBall = GameObject.Find(elementNameToActivate);
+        fallenTime = 0f;
         triggeredBall = false;
     }
 
@@ -24,9 +27,14 @@ public class DeathBallTrigger : MonoBehaviour
 
         if (triggeredBall)
         {
-            // Move the door
-            deathBall.transform.position += new Vector3(deathBallSpeed, 0.0f, 0f);
-        }
+            if ( fallenTime > freeFallTime ) {
+				// Move the door
+            	deathBall.transform.position += new Vector3(deathBallSpeed, 0.0f, 0f);
+			} else {
+				// Still in free fall
+				fallenTime += Time.deltaTime;	
+			}
+		}
 
         
         
