@@ -10,8 +10,24 @@ public class DoorOpenTrigger : MonoBehaviour {
 	 */
 	public string nameOfDoorElement;
 	
+	/*
+	 * How many pixels the door will go up 
+	 */
+	public float amountToMoveY = 5.0f;
+	
+	/*
+	 * How many pixels the door has risen.
+	 * Will eventually be amountAlreadyMovedY == amountToMoveY.
+	 */
+	private float amountAlreadyMovedY;
+	
+	/*
+	 * In how many seconds the door should move the given amount.
+	 * This gives us the speed = amountToMoveY/timeToRise 
+	 */
+	public float timeToMove = 1.0f;
+	
     private GameObject doorToOpen;
-    private float timeToMove;
     
 	// Is the opening triggered
 	private bool triggered;
@@ -22,7 +38,7 @@ public class DoorOpenTrigger : MonoBehaviour {
     // Use this for initialization
     void Start () {
         doorToOpen = GameObject.Find(nameOfDoorElement);
-        timeToMove = 0; // in seconds
+        amountAlreadyMovedY = 0f;
         triggered = false;
 		opened = false;
     }
@@ -33,16 +49,18 @@ public class DoorOpenTrigger : MonoBehaviour {
         if (triggered && ! opened )
         {
             // Move the door
-            doorToOpen.transform.position += new Vector3(0f, 0.1f, 0f);
-            timeToMove -= Time.deltaTime;
+			float howMuchToMove = amountToMoveY * (Time.deltaTime / timeToMove); 
+			amountAlreadyMovedY += howMuchToMove;
+			
+            doorToOpen.transform.position += new Vector3(0f, howMuchToMove, 0f);
         } 
         
-        if ( triggered && timeToMove < 0 )
+        if ( triggered && amountAlreadyMovedY > amountToMoveY )
         {
             // Stop the door
             triggered = false;
 			opened = true;
-            doorToOpen.transform.position += new Vector3(0f, 0f, 0f);
+            //doorToOpen.transform.position += new Vector3(0f, 0f, 0f);
         }
     }
 
@@ -52,7 +70,6 @@ public class DoorOpenTrigger : MonoBehaviour {
         {
 			Debug.Log ("seesami aukene!");
             triggered = true;
-            timeToMove = 1.0f;
         }
 
     }
