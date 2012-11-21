@@ -8,16 +8,18 @@ public class DeathBallTrigger : MonoBehaviour
 	public float freeFallTime = 0.5f;
 	
 	public float deathBallSpeed = 0.05f;
-	public string elementNameToActivate = "deathBall";
+    public GameObject deathBall;
 	
 	private float fallenTime;
-    private GameObject deathBall;
     private bool triggeredBall;
+    private LightActivator lightActivator;
 	
     // Use this for initialization
     void Start()
     {
-        deathBall = GameObject.Find(elementNameToActivate);
+        
+        lightActivator = deathBall.GetComponentInChildren<LightActivator>();
+        lightActivator.deactivate();
         fallenTime = 0f;
         triggeredBall = false;
     }
@@ -54,6 +56,7 @@ public class DeathBallTrigger : MonoBehaviour
         {
             triggeredBall = true;
             deathBall.rigidbody.useGravity = true;
+            lightActivator.activate();
         }
 
     }

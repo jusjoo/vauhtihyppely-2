@@ -68,7 +68,6 @@ public class DoorOpenTrigger : MonoBehaviour {
     {
         if (! triggered && c.gameObject.name == "Player")
         {
-			Debug.Log ("seesami aukene!");
             triggered = true;
         }
 
