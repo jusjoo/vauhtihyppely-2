@@ -81,7 +81,21 @@ public class CharacterMovement : MonoBehaviour {
 
 	}
 
+	public void tryToLand(float collidedTopY) {
+		
+		// If the collided object's top y coordinate is not below our
+		// player, it's a wall. Don't land to it!
+
+		if ( collidedTopY < rigidbody.position.y ) {
+			land ();
+		} else {
+			//Debug.Log ("don't land -- it's a wall");
+		}
+			
+	}
+	
 	public void land() {
+		//Debug.Log ("land here");
 		isFeetOnGround = true;
 		animationHandler.deactivateJumpAnimation();
 		doubleJumpAvailable = true;
