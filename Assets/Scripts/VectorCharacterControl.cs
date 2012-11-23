@@ -12,6 +12,7 @@ public class VectorCharacterControl : MonoBehaviour {
 	private Vector2 originalMousePosition;	
 	private float horizontalOffset;
 	private float verticalOffset;
+	private bool isControlsFreezed;
 	
 	private CharacterMovement movementHandler;	
 	
@@ -21,11 +22,20 @@ public class VectorCharacterControl : MonoBehaviour {
 		isMouseDown = false;
 		horizontalOffset = 0;
 		verticalOffset = 0;
+		isControlsFreezed = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
+		// When help message is shown in practice level,
+		// the user might click the screen during the minShowTime
+		// period. Don't accept controls that time.
+		if ( isControlsFreezed ) {
+			Debug.Log ("jäässä");
+			return;
+		}
+		
 		if ( Input.GetMouseButtonDown(0) && ! isMouseDown )	{
 			// Mouse was pressed down
 			isMouseDown = true;
@@ -65,5 +75,13 @@ public class VectorCharacterControl : MonoBehaviour {
 	 */
 	public float getDragDistancePercent() {
 		return getDragDistance() / maxDragDistance;
+	}
+	
+	public void freezeControls() {
+		isControlsFreezed = true;	
+	}
+	
+	public void unfreezeControls() {
+		isControlsFreezed = false;	
 	}
 }

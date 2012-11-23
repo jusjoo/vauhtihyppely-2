@@ -23,11 +23,8 @@ public class SceneHandler : MonoBehaviour {
 	 */
 	private int offsetFromFirstLevel = 2;
 	
-	/* */
 	private int deathScene;
-	
 	private int mainMenuScene;
-	
 	private int gameFinishedScene;
 	
 	// Use this for initialization
@@ -46,7 +43,7 @@ public class SceneHandler : MonoBehaviour {
 	/**
 	 */
 	public void LoadNextLevel() {
-		Debug.Log ("load next level ");
+		//Debug.Log ("load next level ");
 		
 		currentLevelNumber++;
 		
@@ -54,18 +51,18 @@ public class SceneHandler : MonoBehaviour {
 			LoadCurrentLevel();
 		} else {
 			// TODO peli pelattu onnellisesti loppuun scene
-			Debug.Log ("peli pelattu läpi");
+			//Debug.Log ("peli pelattu läpi");
 			Application.LoadLevel(gameFinishedScene);			
 		}
 	}
 	
 	public void LoadCurrentLevel() {
-		Debug.Log("load level with index " + (currentLevelNumber + offsetFromFirstLevel) );		
+		//Debug.Log("load level with index " + (currentLevelNumber + offsetFromFirstLevel) );		
 		Application.LoadLevel( currentLevelNumber + offsetFromFirstLevel );
 	}
 	
 	public void LoadDeathScene() {
-		Debug.Log ("load death scene");
+		//Debug.Log ("load death scene");
 		Application.LoadLevel(deathScene);
 	}
 	
@@ -73,7 +70,7 @@ public class SceneHandler : MonoBehaviour {
 	 * When game is started for the first time 
 	 */
 	public void GameStart() {
-		Debug.Log("game start from scene handler");
+		//Debug.Log("game start from scene handler");
 		currentLevelNumber = 1;
 		Application.LoadLevel( (currentLevelNumber + offsetFromFirstLevel) );
 	}
