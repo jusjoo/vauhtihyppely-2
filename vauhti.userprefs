@@ -2,14 +2,14 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\CharacterMovement.cs">
     <Files>
-      <File FileName="Assets\Scripts\TimeFreezer.cs" Line="23" Column="42" />
-      <File FileName="Assets\Scripts\VectorCharacterControl.cs" Line="55" Column="23" />
-      <File FileName="Assets\Scripts\FeetSensorTrigger.cs" Line="38" Column="22" />
+      <File FileName="Assets\Scripts\VectorCharacterControl.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\CharacterMovement.cs" Line="181" Column="50" />
+      <File FileName="Assets\Scripts\TimeFreezer.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\FeetSensorTrigger.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\SpriteAnimator.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\SceneHandler.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\GameFinishedButton.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\GUIMessageTrigger.cs" Line="10" Column="23" />
-      <File FileName="Assets\Scripts\CharacterMovement.cs" Line="87" Column="44" />
+      <File FileName="Assets\Scripts\GUIMessageTrigger.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

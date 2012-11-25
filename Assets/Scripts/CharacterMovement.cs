@@ -5,32 +5,28 @@ using System.Collections;
 
 public class CharacterMovement : MonoBehaviour {
 	
-	public float horizontalMultiplier;
-	public float verticalMultiplier;
-	public float airMovementFactor;
-
-	// Amount (in pixels) in vertical drag, that is ignored,
-	// to prevent unwanted jumps.
-	// Refactor this to use an angle instead of distance.
-	public float yDeadZone;
+	private float multiplierX = 600;
+	private float multiplierY = 1400;
 	
-	public float maxSpeedX;
-	public float maxSpeedY;	
-	
-	private Vector3 movement;
+	private float airMovementFactor = 0.7f;
 
+	private float maxSpeedX = 10f;
+	private float maxSpeedY = 10f;	
+	
 	private bool jumping;
 	private bool isFeetOnGround;
 	private bool doubleJumpAvailable;
 	private bool blackCoffeeAvailable;
-
-	private Rigidbody rigidbody;
+	
+	private Vector3 deltaMove;
+	
+	private Rigidbody player;
     private HUDJumpBooster guiText;
 	private AnimationStateHandler animationHandler;
 	private PowerUpStateHandler powerUpStateHandler;
 
 	void Start () {
-		rigidbody = this.GetComponent<Rigidbody>();
+		player = this.GetComponent<Rigidbody>();
         guiText = GameObject.Find("JumpBooster").GetComponent<HUDJumpBooster>();
 		animationHandler = this.GetComponent<AnimationStateHandler>();
 		powerUpStateHandler = this.GetComponent<PowerUpStateHandler>();
@@ -40,14 +36,11 @@ public class CharacterMovement : MonoBehaviour {
 
 	void Update () {
 		
-		// calculate the movement force given from controllers
-		Vector3 deltaMove = new Vector3(movement.x, movement.y, movement.z) * Time.deltaTime/Time.timeScale ;
-		rigidbody.AddForce (deltaMove);
-		movement =- deltaMove;
-	
+		//Debug.Log ("speedX " + rigidbody.velocity.x + " speedY " + rigidbody.velocity.y);
+		
 		// Turn player's face to the direction where it is moving
-        animationHandler.flip(rigidbody.velocity.x < 0);
-		animationHandler.setRunFactor(rigidbody.velocity.x / maxSpeedX );
+        animationHandler.flip(player.velocity.x < 0);
+		animationHandler.setRunFactor(player.velocity.x / maxSpeedX );
 		
 		if ( ! isOnGround() ) {
 			animationHandler.activateJumpAnimation();
@@ -56,37 +49,42 @@ public class CharacterMovement : MonoBehaviour {
 			activateBlackCoffee();
 	}
 	
-	public void move(float horizontalMovement, float verticalMovement) {
-
-		// To prevent unwanted jumps
-		if ( Mathf.Abs(verticalMovement) < yDeadZone ) {
-			verticalMovement = 0;
-		}
+	/**
+	 * @params
+	 *  - deltaX = 0..1
+	 *	- deltaY = 0..1
+	 *	
+	 *	Required that deltaX^2 + deltaY^2 <= 1
+	 */
+	public void move(float deltaX, float deltaY) {
+		
+		deltaMove = new Vector3(0,0,0);
 		
 		if ( isOnGround() || doubleJumpActive()) {
 			// Player is on the ground. Normal controls
-			movement.x += horizontalMultiplier*horizontalMovement;
-			movement.y += verticalMultiplier*verticalMovement;
+			deltaMove.x = deltaX*multiplierX;
+			deltaMove.y = deltaY*multiplierY;
 
-		} else {
-			// Player is in the air, can only slow down x-speed.
-			// Not possible to jump.
-			if ( (horizontalMovement > 0 && rigidbody.velocity.x < 0) ||
-				 (horizontalMovement < 0 && rigidbody.velocity.x > 0) ) {
-				movement.x += airMovementFactor*horizontalMultiplier*horizontalMovement;			
-			}
+		} else if ( isTryingToReduceSpeed(deltaX) ) {
+			deltaMove.x = deltaX*airMovementFactor*multiplierX;
 		}
 		
     	checkMovementBoundaries();
-
+		Debug.Log ("mx" + player.velocity.x);
+		// To normalize with time
+		player.AddForce (deltaMove * Time.deltaTime/Time.timeScale);
 	}
-
+	
+	private bool isTryingToReduceSpeed(float deltaX) {
+		bool trying = (deltaX > 0 && player.velocity.x < 0) ||
+				 (deltaX < 0 && player.velocity.x > 0);	
+		return trying;
+	}
+	
 	public void tryToLand(float collidedTopY) {
 		
-		// If the collided object's top y coordinate is not below our
-		// player, it's a wall. Don't land to it!
-
-		if ( collidedTopY < rigidbody.position.y ) {
+		// To avoid landing on walls.
+		if ( collidedTopY < player.position.y ) {
 			land ();
 		} else {
 			//Debug.Log ("don't land -- it's a wall");
@@ -105,10 +103,6 @@ public class CharacterMovement : MonoBehaviour {
 		isFeetOnGround = b;
 	}
 	
-	/*
-	 * Returns true if the players feet are on ground.
-	 * Used to be named "getJumpingAllowed".
-	 */
 	public bool isOnGround() {
 		return isFeetOnGround;
 	}
@@ -144,20 +138,46 @@ public class CharacterMovement : MonoBehaviour {
 		// for example movement.x = 300 won't work.
 		// Because of this we use a workaround.
 		
-		if (rigidbody.velocity.x > maxSpeedX && movement.x > 0) {
-			// Workaround: With this added amount the movement.x
-			// will be equal to maxSpeedX.
-			movement.x = maxSpeedX - rigidbody.velocity.x;
-		} else if (rigidbody.velocity.x < -maxSpeedX && movement.x < 0) {
-			// Workaround
-			movement.x = -(maxSpeedX - rigidbody.velocity.x);
+		
+		if ( goesFasterThanMaxSpeedX() ) {
+			deltaMove.x = 0;	
 		}
 		
-		if (movement.y > maxSpeedY) {
-			movement.y = maxSpeedY;
-		} else if (movement.y < -maxSpeedY) {
-			movement.y = -maxSpeedY;
+		return; // FIX THIS SHIT
+		
+		Debug.Log("deltamove.x " + deltaMove.x + " velocity.x " + player.velocity.x);
+		
+		if ( isPlayerGoingRight() && isAddingSpeedToRight() && willGoFasterThanMaxSpeed() ) {
+			
+			// Workaround: With this added amount the movement.x
+			// will be equal to maxSpeedX.
+			Debug.Log ("reduce1");
+			deltaMove.x = maxSpeedX - player.velocity.x;
+		} else if ( ! isPlayerGoingRight() && ! isAddingSpeedToRight() && willGoFasterThanMaxSpeed() ) {
+			// Workaround
+			Debug.Log ("reduce2");
+			deltaMove.x = -maxSpeedX + player.velocity.x;
+		}
+		
+	}
+	
+	private bool isPlayerGoingRight() {
+		return player.velocity.x > 0;	
+	}
+	
+	private bool isAddingSpeedToRight() {
+		return deltaMove.x > 0;	
+	}
+	
+	private bool willGoFasterThanMaxSpeed() {
+		if ( isPlayerGoingRight() ) {
+			return player.velocity.x + deltaMove.x > maxSpeedX;
+		} else {
+			return player.velocity.x + deltaMove.x < -maxSpeedX;
 		}
 	}
-
+	
+	private bool goesFasterThanMaxSpeedX() {
+		return Mathf.Abs(player.velocity.x) > maxSpeedX;	
+	}
 }
