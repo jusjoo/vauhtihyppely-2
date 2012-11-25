@@ -32,8 +32,7 @@ public class SceneHandler : MonoBehaviour {
 		mainMenuScene = 0;		
 		deathScene = 1;
 		gameFinishedScene = 2;
-		lastLevelNumber = 4;
-        Time.timeScale = 1; //Just that black coffee powerup doesn't stay on
+		lastLevelNumber = 5;
 	}
 	
 	// Update is called once per frame

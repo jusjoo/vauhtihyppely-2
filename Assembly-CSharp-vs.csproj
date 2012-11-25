@@ -69,15 +69,17 @@
      <Compile Include="Assets\Scripts\LevelCompletion.cs" />
      <Compile Include="Assets\Scripts\LightActivator.cs" />
      <Compile Include="Assets\Scripts\PixelArtImporter.cs" />
-     <Compile Include="Assets\Scripts\PowerUpBlackCoffee.cs" />
      <Compile Include="Assets\Scripts\PowerUpColorFade.cs" />
-     <Compile Include="Assets\Scripts\PowerUpEspresso.cs" />
      <Compile Include="Assets\Scripts\PowerUpStateHandler.cs" />
      <Compile Include="Assets\Scripts\PowerUpTemplate.cs" />
+     <Compile Include="Assets\Scripts\PowerUpTrigger.cs" />
      <Compile Include="Assets\Scripts\SceneHandler.cs" />
      <Compile Include="Assets\Scripts\SpriteAnimator.cs" />
      <Compile Include="Assets\Scripts\StatsHandler.cs" />
      <Compile Include="Assets\Scripts\TimeFreezer.cs" />
+     <Compile Include="Assets\Scripts\ToBeRemoved\PowerUpBlackCoffee.cs" />
+     <Compile Include="Assets\Scripts\ToBeRemoved\PowerUpEspresso.cs" />
+     <Compile Include="Assets\Scripts\ToBeRemoved\PowerUpIrishCoffee.cs" />
      <Compile Include="Assets\Scripts\VectorCharacterControl.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

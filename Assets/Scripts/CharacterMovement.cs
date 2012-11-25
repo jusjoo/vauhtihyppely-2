@@ -47,6 +47,10 @@ public class CharacterMovement : MonoBehaviour {
 		}
 		if (blackCoffeeActive())
 			activateBlackCoffee();
+		
+		if ( powerUpStateHandler.isPowerUpOn("IrishCoffee") ) {
+			player.AddForce( new Vector3(9, 35, 0)*Time.deltaTime/Time.timeScale );
+		}
 	}
 	
 	/**
@@ -70,7 +74,7 @@ public class CharacterMovement : MonoBehaviour {
 		}
 		
     	checkMovementBoundaries();
-		Debug.Log ("mx" + player.velocity.x);
+
 		// To normalize with time
 		player.AddForce (deltaMove * Time.deltaTime/Time.timeScale);
 	}
@@ -108,7 +112,7 @@ public class CharacterMovement : MonoBehaviour {
 	}
 
 	private bool doubleJumpActive() {
-		if(powerUpStateHandler.isPowerUpOn("DoubleJump")){
+		if(powerUpStateHandler.isPowerUpOn("Espresso")){
 			if (doubleJumpAvailable) {
 				doubleJumpAvailable = false;
 				return true;
