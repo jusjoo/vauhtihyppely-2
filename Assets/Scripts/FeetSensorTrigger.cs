@@ -15,19 +15,25 @@ public class FeetSensorTrigger : MonoBehaviour {
 	}
 	
 	void OnCollisionEnter(Collision collision) {
-		Debug.Log("land");
-		movement.land();
+		this.HandleCollision(collision);
 	}
-
+	
+	void OnCollisionStay(Collision collision)
+	{
+		this.HandleCollision(collision);
+	}
 
 	void OnCollisionExit(Collision collision)
 	{
 		movement.setFeetOnGround(false);
 	}
 
-	void OnCollisionStay(Collision collision)
-	{
-		movement.land();
+	void HandleCollision(Collision collision) {
+		float objCenterY = collision.collider.transform.position.y;
+		float objHeight = collision.collider.transform.localScale.y;
+		float objTopY = objCenterY + objHeight / 2;
+		
+		movement.tryToLand(objTopY);
 	}
 	
 

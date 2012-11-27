@@ -10,19 +10,19 @@ public class PowerUpStateHandler : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		powerUps = new List<string>();
+		Time.timeScale = 1; //Just that black coffee powerup doesn't stay on
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
 	}
 
 	public void activatePowerUp(string type){
+		powerUps.Clear();
 		powerUps.Add(type);
 	}
 
 	public bool isPowerUpOn(string type){
-		Debug.Log("type == isactive" + powerUps.Contains(type));
 		return (powerUps.Contains(type));
 	}
 }
