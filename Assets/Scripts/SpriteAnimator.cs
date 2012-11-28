@@ -28,8 +28,6 @@ public class SpriteAnimator : MonoBehaviour {
 	
 	public enum AnimationState { Idle, Run, Jump, Fall }
 
-	
-
 	// Use this for initialization
 	void Start () {
 		runFactor=0;

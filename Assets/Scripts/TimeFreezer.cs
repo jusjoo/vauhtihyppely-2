@@ -30,7 +30,6 @@ public class TimeFreezer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log ("time" + messageShowTimeLeft);
 		
 		if ( messageShowTimeLeft < 0 ) {
 	        if (Input.anyKeyDown)

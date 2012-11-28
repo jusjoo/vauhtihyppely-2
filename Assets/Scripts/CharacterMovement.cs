@@ -35,9 +35,7 @@ public class CharacterMovement : MonoBehaviour {
 	}
 
 	void Update () {
-		
-		//Debug.Log ("speedX " + rigidbody.velocity.x + " speedY " + rigidbody.velocity.y);
-		
+
 		// Turn player's face to the direction where it is moving
         animationHandler.flip(player.velocity.x < 0);
 		animationHandler.setRunFactor(player.velocity.x / maxSpeedX );
@@ -91,13 +89,13 @@ public class CharacterMovement : MonoBehaviour {
 		if ( collidedTopY < player.position.y ) {
 			land ();
 		} else {
-			//Debug.Log ("don't land -- it's a wall");
+
 		}
 			
 	}
 	
 	public void land() {
-		//Debug.Log ("land here");
+
 		isFeetOnGround = true;
 		animationHandler.deactivateJumpAnimation();
 		doubleJumpAvailable = true;
@@ -148,8 +146,6 @@ public class CharacterMovement : MonoBehaviour {
 		}
 		
 		return; // FIX THIS SHIT
-		
-		Debug.Log("deltamove.x " + deltaMove.x + " velocity.x " + player.velocity.x);
 		
 		if ( isPlayerGoingRight() && isAddingSpeedToRight() && willGoFasterThanMaxSpeed() ) {
 			
