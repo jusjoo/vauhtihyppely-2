@@ -19,7 +19,6 @@ public class DeathTriggerObject : MonoBehaviour {
     {
         if (c.gameObject.name == "Player")
         {
-            Debug.Log("death by death ball");
 			sceneHandler.LoadDeathScene();
         }
     }

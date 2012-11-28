@@ -32,6 +32,13 @@ public class VectorCharacterControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
+		// When help message is shown in practice level,
+		// the user might click the screen during the minShowTime
+		// period. Don't accept controls that time.
+		if ( isControlsFreezed ) {
+			return;
+		}
+		
 		if ( Input.GetMouseButtonDown(0) && ! isMouseDown )	{
 			// Mouse was pressed down
 			isMouseDown = true;
@@ -49,6 +56,7 @@ public class VectorCharacterControl : MonoBehaviour {
 			sendMovement();
 			clearDrag();
 		}
+
 	}
 	
 	private void clearDrag() {
@@ -63,20 +71,15 @@ public class VectorCharacterControl : MonoBehaviour {
 			verticalOffset = 0;
 		}
 		
-		//Debug.Log ("distance " + getDragDistance() );
-		//Debug.Log ("hor " + horizontalOffset + " ver " + verticalOffset);		
-		
 		if ( isOverMaxDragDistance() ) {
-			// Normalize using the real distance
+			// Normalize
 			float temp_distance = getDragDistance();
 			horizontalOffset *= 1 / temp_distance;
 			verticalOffset *= 1 / temp_distance;
 		} else {
-			// Normalize using the normal max distance
 			horizontalOffset *= 1 / maxDragDistance;
 			verticalOffset *= 1 / maxDragDistance;
 		}
-		Debug.Log ("hor_norm " + horizontalOffset + " ver_norm " + verticalOffset);
 		
 		movementHandler.move(-horizontalOffset, -verticalOffset);
 	}	
@@ -90,7 +93,6 @@ public class VectorCharacterControl : MonoBehaviour {
 		float angle = Mathf.Atan2(verticalOffset, horizontalOffset);
 		angle = Mathf.Abs(angle);
 		angle = angle*Mathf.Rad2Deg;
-		//Debug.Log("kulma " + angle);
 		return angle;
 	}
 	
@@ -113,7 +115,7 @@ public class VectorCharacterControl : MonoBehaviour {
 	 */
 	public float getDragDistancePercent() {
 		float percent = getDragDistance() / maxDragDistance;
-		if ( percent > 1.0f ) {
+		if ( percent > 1 ) {
 			percent = 1.0f;
 		}
 		

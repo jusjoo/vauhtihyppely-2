@@ -5,8 +5,8 @@ using System.Collections;
 
 public class CharacterMovement : MonoBehaviour {
 	
-	private float multiplierX = 6;
-	private float multiplierY = 14;
+	private float multiplierX = 600;
+	private float multiplierY = 1400;
 	
 	private float airMovementFactor = 0.7f;
 
@@ -35,9 +35,7 @@ public class CharacterMovement : MonoBehaviour {
 	}
 
 	void Update () {
-		
-		//Debug.Log ("speedX " + rigidbody.velocity.x + " speedY " + rigidbody.velocity.y);
-		
+
 		// Turn player's face to the direction where it is moving
         animationHandler.flip(player.velocity.x < 0);
 		animationHandler.setRunFactor(player.velocity.x / maxSpeedX );
@@ -63,7 +61,7 @@ public class CharacterMovement : MonoBehaviour {
 	public void move(float deltaX, float deltaY) {
 		
 		deltaMove = new Vector3(0,0,0);
-
+		
 		if ( isOnGround() || doubleJumpActive()) {
 			// Player is on the ground. Normal controls
 			deltaMove.x = deltaX*multiplierX;
@@ -72,9 +70,11 @@ public class CharacterMovement : MonoBehaviour {
 		} else if ( isTryingToReduceSpeed(deltaX) ) {
 			deltaMove.x = deltaX*airMovementFactor*multiplierX;
 		}
+		
+    	checkMovementBoundaries();
 
-		applySpeedLimits();
-		player.AddForce(deltaMove);
+		// To normalize with time
+		player.AddForce (deltaMove * Time.deltaTime/Time.timeScale);
 	}
 	
 	private bool isTryingToReduceSpeed(float deltaX) {
@@ -83,25 +83,19 @@ public class CharacterMovement : MonoBehaviour {
 		return trying;
 	}
 	
-	public void tryToLand(Collision collision) {
-
-		float objCenterY = collision.collider.transform.position.y;
-		float objHeight = collision.collider.transform.localScale.y;
-		float objTopY = objCenterY + objHeight / 2;
-
-		if ( collision.collider.transform.rotation.z != 0 ) {
-			// Don't land on rotated objects
-		} else if ( objTopY < player.position.y ) {
-			// Land because the collision object is below our player
+	public void tryToLand(float collidedTopY) {
+		
+		// To avoid landing on walls.
+		if ( collidedTopY < player.position.y ) {
 			land ();
 		} else {
-			//Debug.Log ("don't land -- it's a wall");
+
 		}
 			
 	}
 	
 	public void land() {
-		//Debug.Log ("land here");
+
 		isFeetOnGround = true;
 		animationHandler.deactivateJumpAnimation();
 		doubleJumpAvailable = true;
@@ -119,6 +113,7 @@ public class CharacterMovement : MonoBehaviour {
 		if(powerUpStateHandler.isPowerUpOn("Espresso")){
 			if (doubleJumpAvailable) {
 				doubleJumpAvailable = false;
+                animationHandler.createDoubleJumpEffect();
 				return true;
 			}
 		}
@@ -138,24 +133,52 @@ public class CharacterMovement : MonoBehaviour {
 	private void activateBlackCoffee(){
 		Time.timeScale = 0.2f;
 	}
-
 	/*
 	 * Prevents the player from going faster than wanted
 	 */
-	private void applySpeedLimits() {
-
-		if (player.velocity.x > maxSpeedX && isAddingSpeedToRight() )
-		{
-			deltaMove.x = 0;
+	private void checkMovementBoundaries() {
+		// We can't set the movement.x value directly,
+		// for example movement.x = 300 won't work.
+		// Because of this we use a workaround.
+		
+		
+		if ( goesFasterThanMaxSpeedX() ) {
+			deltaMove.x = 0;	
 		}
-		else if (player.velocity.x < -maxSpeedX && ! isAddingSpeedToRight() )
-		{
-			deltaMove.x = 0;
+		
+		return; // FIX THIS SHIT
+		
+		if ( isPlayerGoingRight() && isAddingSpeedToRight() && willGoFasterThanMaxSpeed() ) {
+			
+			// Workaround: With this added amount the movement.x
+			// will be equal to maxSpeedX.
+			Debug.Log ("reduce1");
+			deltaMove.x = maxSpeedX - player.velocity.x;
+		} else if ( ! isPlayerGoingRight() && ! isAddingSpeedToRight() && willGoFasterThanMaxSpeed() ) {
+			// Workaround
+			Debug.Log ("reduce2");
+			deltaMove.x = -maxSpeedX + player.velocity.x;
 		}
+		
+	}
+	
+	private bool isPlayerGoingRight() {
+		return player.velocity.x > 0;	
 	}
 	
 	private bool isAddingSpeedToRight() {
 		return deltaMove.x > 0;	
 	}
 	
+	private bool willGoFasterThanMaxSpeed() {
+		if ( isPlayerGoingRight() ) {
+			return player.velocity.x + deltaMove.x > maxSpeedX;
+		} else {
+			return player.velocity.x + deltaMove.x < -maxSpeedX;
+		}
+	}
+	
+	private bool goesFasterThanMaxSpeedX() {
+		return Mathf.Abs(player.velocity.x) > maxSpeedX;	
+	}
 }
