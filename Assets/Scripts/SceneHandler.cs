@@ -41,27 +41,22 @@ public class SceneHandler : MonoBehaviour {
 	
 	/**
 	 */
-	public void LoadNextLevel() {
-		//Debug.Log ("load next level ");
-		
+	public void LoadNextLevel() {	
 		currentLevelNumber++;
 		
 		if ( currentLevelNumber <= lastLevelNumber ) {
 			LoadCurrentLevel();
 		} else {
 			// TODO peli pelattu onnellisesti loppuun scene
-			//Debug.Log ("peli pelattu läpi");
 			Application.LoadLevel(gameFinishedScene);			
 		}
 	}
 	
-	public void LoadCurrentLevel() {
-		//Debug.Log("load level with index " + (currentLevelNumber + offsetFromFirstLevel) );		
+	public void LoadCurrentLevel() {	
 		Application.LoadLevel( currentLevelNumber + offsetFromFirstLevel );
 	}
 	
 	public void LoadDeathScene() {
-		//Debug.Log ("load death scene");
 		Application.LoadLevel(deathScene);
 	}
 	
@@ -69,7 +64,6 @@ public class SceneHandler : MonoBehaviour {
 	 * When game is started for the first time 
 	 */
 	public void GameStart() {
-		//Debug.Log("game start from scene handler");
 		currentLevelNumber = 1;
 		Application.LoadLevel( (currentLevelNumber + offsetFromFirstLevel) );
 	}

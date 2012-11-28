@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PowerUpTrigger : PowerUpTemplate {
 	
-	public string powerUpType = "Espresso";
+	public string powerUpType;
 	private bool setToDestroy;
 	
 	// Update is called once per frame

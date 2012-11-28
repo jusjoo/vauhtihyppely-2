@@ -60,7 +60,6 @@ public class DoorOpenTrigger : MonoBehaviour {
             // Stop the door
             triggered = false;
 			opened = true;
-            //doorToOpen.transform.position += new Vector3(0f, 0f, 0f);
         }
     }
 
