@@ -32,14 +32,6 @@ public class VectorCharacterControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
-		// When help message is shown in practice level,
-		// the user might click the screen during the minShowTime
-		// period. Don't accept controls that time.
-		if ( isControlsFreezed ) {
-			Debug.Log ("jäässä");
-			return;
-		}
-		
 		if ( Input.GetMouseButtonDown(0) && ! isMouseDown )	{
 			// Mouse was pressed down
 			isMouseDown = true;
@@ -57,7 +49,6 @@ public class VectorCharacterControl : MonoBehaviour {
 			sendMovement();
 			clearDrag();
 		}
-
 	}
 	
 	private void clearDrag() {
@@ -76,15 +67,16 @@ public class VectorCharacterControl : MonoBehaviour {
 		//Debug.Log ("hor " + horizontalOffset + " ver " + verticalOffset);		
 		
 		if ( isOverMaxDragDistance() ) {
-			// Normalize
+			// Normalize using the real distance
 			float temp_distance = getDragDistance();
 			horizontalOffset *= 1 / temp_distance;
 			verticalOffset *= 1 / temp_distance;
 		} else {
+			// Normalize using the normal max distance
 			horizontalOffset *= 1 / maxDragDistance;
 			verticalOffset *= 1 / maxDragDistance;
 		}
-		//Debug.Log ("hor_norm " + horizontalOffset + " ver_norm " + verticalOffset);
+		Debug.Log ("hor_norm " + horizontalOffset + " ver_norm " + verticalOffset);
 		
 		movementHandler.move(-horizontalOffset, -verticalOffset);
 	}	
@@ -121,7 +113,7 @@ public class VectorCharacterControl : MonoBehaviour {
 	 */
 	public float getDragDistancePercent() {
 		float percent = getDragDistance() / maxDragDistance;
-		if ( percent > 1 ) {
+		if ( percent > 1.0f ) {
 			percent = 1.0f;
 		}
 		

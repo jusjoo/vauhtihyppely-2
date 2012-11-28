@@ -29,11 +29,7 @@ public class FeetSensorTrigger : MonoBehaviour {
 	}
 
 	void HandleCollision(Collision collision) {
-		float objCenterY = collision.collider.transform.position.y;
-		float objHeight = collision.collider.transform.localScale.y;
-		float objTopY = objCenterY + objHeight / 2;
-		
-		movement.tryToLand(objTopY);
+		movement.tryToLand(collision);
 	}
 	
 
