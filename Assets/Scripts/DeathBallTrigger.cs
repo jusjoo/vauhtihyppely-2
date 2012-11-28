@@ -3,18 +3,24 @@ using System.Collections;
 
 public class DeathBallTrigger : MonoBehaviour
 {
-
-    private GameObject deathBall;
-  
+	// How many seconds the ball will fall with extra "gravity"
+	// and we slowly speed up the forward movement
+	public float freeFallTime = 0.5f;
+	
+	public float deathBallSpeed = 0.05f;
+    public GameObject deathBall;
+	
+	private float fallenTime;
     private bool triggeredBall;
-
-    public float deathBallSpeed = 0.05f;
-
+    private LightActivator lightActivator;
+	
     // Use this for initialization
     void Start()
     {
-        deathBall = GameObject.Find("deathBall");
-        //timeToMove = 0; // in seconds
+        
+        lightActivator = deathBall.GetComponentInChildren<LightActivator>();
+        lightActivator.deactivate();
+        fallenTime = 0f;
         triggeredBall = false;
     }
 
@@ -24,9 +30,21 @@ public class DeathBallTrigger : MonoBehaviour
 
         if (triggeredBall)
         {
-            // Move the door
-            deathBall.transform.position += new Vector3(deathBallSpeed, 0.0f, 0f);
-        }
+            if ( fallenTime > freeFallTime ) {
+				// Move the ball forward
+            	deathBall.transform.position += new Vector3(deathBallSpeed, 0.0f, 0f);
+			} else {
+				// Still in free fall
+				fallenTime += Time.deltaTime;
+				
+				// ... actually free fall is not enough. Let's speed up the falling.
+				float dropAmount = -1.9f *Time.deltaTime;
+				
+				// ... also, slowly start moving the ball forward.
+				float moveForwardAmount = deathBallSpeed* (fallenTime/freeFallTime);
+				deathBall.transform.position += new Vector3(moveForwardAmount, dropAmount, 0f);
+			}
+		}
 
         
         
@@ -38,6 +56,7 @@ public class DeathBallTrigger : MonoBehaviour
         {
             triggeredBall = true;
             deathBall.rigidbody.useGravity = true;
+            lightActivator.activate();
         }
 
     }
