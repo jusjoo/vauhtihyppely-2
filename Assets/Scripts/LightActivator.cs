@@ -3,6 +3,8 @@ using System.Collections;
 
 public class LightActivator : MonoBehaviour {
 
+    public bool instantActivation;
+
     private bool activated;
     private float timer;
 	// Use this for initialization
@@ -45,8 +47,15 @@ public class LightActivator : MonoBehaviour {
 
     public void activate()
     {
-        timer = 0;
-        activated = true;
+        if (instantActivation)
+        {
+            gameObject.GetComponent<Light>().enabled = true;
+        }
+        else
+        {
+            timer = 0;
+            activated = true;
+        }
         
     }
 

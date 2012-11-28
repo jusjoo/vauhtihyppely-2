@@ -115,6 +115,7 @@ public class CharacterMovement : MonoBehaviour {
 		if(powerUpStateHandler.isPowerUpOn("Espresso")){
 			if (doubleJumpAvailable) {
 				doubleJumpAvailable = false;
+                animationHandler.createDoubleJumpEffect();
 				return true;
 			}
 		}
