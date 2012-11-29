@@ -16,7 +16,7 @@ public class FallingPlatformScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+		
 		if (triggered)
 		{
 			if (fallTimer > 0)
@@ -37,7 +37,11 @@ public class FallingPlatformScript : MonoBehaviour {
 
 	void OnCollisionEnter(Collision c)
 	{
-		if (!triggered && c.gameObject.name == "Player")
+		// Only trigger the platfrom when the player is above it
+		
+		if (!triggered 
+			&& c.gameObject.name == "Player" 
+			&& c.transform.position.y > gameObject.transform.position.y )
 		{
 			triggered = true;
 			fallTimer = fallAfterTime;

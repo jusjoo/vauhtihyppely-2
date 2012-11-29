@@ -64,10 +64,16 @@ public class CharacterMovement : MonoBehaviour {
 		deltaMove = new Vector3(0,0,0);
 		
 		if ( isOnGround() || doubleJumpActive()) {
-			Debug.Log ("hyppyh");
 			// Player is on the ground. Normal controls
 			deltaMove.x = deltaX*multiplierX*maxSpeedX;
 			deltaMove.y = deltaY*multiplierY*maxSpeedY;
+			
+			// If the player wants to jump to complete new direction,
+			// then make it easier
+			/*if ( Mathf.Abs(deltaY) > 0.001 && wantsToChangeDirection() ) {
+				player.velocity = new Vector3(0, player.velocity.y, 0);	
+			}*/
+			
 
 		} else if ( isTryingToReduceSpeed(deltaX) ) {
 			deltaMove.x = deltaX*airMovementFactor*multiplierX*maxSpeedX;
@@ -92,13 +98,19 @@ public class CharacterMovement : MonoBehaviour {
 		float objHeightY = objScaleY;
 		float objTopY = objCenterY + 0.5f * objHeightY;
 		
-		if ( objTopY < player.position.y ) {
+		
+		// 3 is a magic number, because won't land on flag pole otherwise...
+		if ( objTopY < player.position.y + 3 ) {
 			// The object is actually below the player, it's safe to land
 			land ();
-		} else if ( Mathf.Abs(collision.transform.rotation.z) < 0.20f ) {
+		} else if ( Mathf.Abs(collision.transform.rotation.z) < 0.20f
+				&& Mathf.Abs(collision.transform.rotation.z) > 0.01f ) {
 			// Land because the obj is rotated less than 20 degrees
+			// but it's rotated atleast 1 degree (otherwise it could be a wall)
 			Debug.Log ("land on a rotated " + collision.transform.rotation.z );
 			land ();
+		} else {
+			// for fucks sake, don't land
 		}
 			
 	}
@@ -139,7 +151,7 @@ public class CharacterMovement : MonoBehaviour {
 	private void checkMovementBoundaries() {
 		if ( player.velocity.x > maxSpeedX && isAddingSpeedToRight() ) {
 			deltaMove.x = 0;	
-		} else if ( player.velocity.x < maxSpeedX && ! isAddingSpeedToRight() ) {
+		} else if ( player.velocity.x < -maxSpeedX && ! isAddingSpeedToRight() ) {
 			deltaMove.x = 0;
 		}
 	}
@@ -148,4 +160,7 @@ public class CharacterMovement : MonoBehaviour {
 		return deltaMove.x > 0;	
 	}
 	
+	private bool wantsToChangeDirection() {
+		return (deltaMove.x < 0.5 && player.velocity.x > 0 || deltaMove.x > 0.5 && player.velocity.x < 0);
+	}
 }

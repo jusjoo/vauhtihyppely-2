@@ -8,14 +8,17 @@ public class SceneHandler : MonoBehaviour {
 	 * Actually the index of the level starts from 2, but
 	 * we will add +1 to it.
 	 */
-	private static int currentLevelNumber = 2;
+	private static int currentLevelNumber = 1;
 	
 	/**
 	 * How many levels do we have?
 	 * At the moments 3 levels, but aiming for 6.
 	 */
 	private int lastLevelNumber;
-
+	
+	
+	private static int timesPlayedThisLevel = -1;
+	
 	/*
 	 * The offset in Build Settings from the Level 1 to the index of the level.
 	 * For examle, currently Level 1 has the index 3 
@@ -32,7 +35,7 @@ public class SceneHandler : MonoBehaviour {
 		mainMenuScene = 0;		
 		deathScene = 1;
 		gameFinishedScene = 2;
-		lastLevelNumber = 5;
+		lastLevelNumber = 7;
 	}
 	
 	// Update is called once per frame
@@ -43,6 +46,7 @@ public class SceneHandler : MonoBehaviour {
 	 */
 	public void LoadNextLevel() {	
 		currentLevelNumber++;
+		timesPlayedThisLevel = -1;
 		
 		if ( currentLevelNumber <= lastLevelNumber ) {
 			LoadCurrentLevel();
@@ -52,7 +56,8 @@ public class SceneHandler : MonoBehaviour {
 		}
 	}
 	
-	public void LoadCurrentLevel() {	
+	public void LoadCurrentLevel() {
+		timesPlayedThisLevel++;
 		Application.LoadLevel( currentLevelNumber + offsetFromFirstLevel );
 	}
 	
@@ -70,5 +75,16 @@ public class SceneHandler : MonoBehaviour {
 	
 	public void LoadMainMenu() {
 		Application.LoadLevel (mainMenuScene);
+	}
+	
+	public bool isPlayingLevelForFistTime() {
+		Debug.Log (timesPlayedThisLevel);
+		return timesPlayedThisLevel < 1;
+	}
+	
+	public void skipToLevel(int levelNumber) {
+		currentLevelNumber = levelNumber;
+		timesPlayedThisLevel = -1;
+		LoadCurrentLevel();
 	}
 }

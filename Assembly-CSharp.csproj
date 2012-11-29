@@ -66,6 +66,7 @@
      <Compile Include="Assets\Scripts\HUDJumpBooster.cs" />
      <Compile Include="Assets\Scripts\LevelChooserButton.cs" />
      <Compile Include="Assets\Scripts\LevelCompletion.cs" />
+     <Compile Include="Assets\Scripts\LevelNameTrigger.cs" />
      <Compile Include="Assets\Scripts\LightActivator.cs" />
      <Compile Include="Assets\Scripts\PixelArtImporter.cs" />
      <Compile Include="Assets\Scripts\PowerUpColorFade.cs" />
@@ -75,6 +76,7 @@
      <Compile Include="Assets\Scripts\SceneHandler.cs" />
      <Compile Include="Assets\Scripts\SpriteAnimator.cs" />
      <Compile Include="Assets\Scripts\TimeFreezer.cs" />
+     <Compile Include="Assets\Scripts\TimedSelfDestroyer.cs" />
      <Compile Include="Assets\Scripts\ToBeRemoved\PowerUpBlackCoffee.cs" />
      <Compile Include="Assets\Scripts\ToBeRemoved\PowerUpEspresso.cs" />
      <Compile Include="Assets\Scripts\ToBeRemoved\PowerUpIrishCoffee.cs" />
