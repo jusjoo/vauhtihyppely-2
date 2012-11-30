@@ -68,6 +68,7 @@ public class VectorCharacterControl : MonoBehaviour {
 			horizontalOffset *= 1 / temp_distance;
 			verticalOffset *= 1 / temp_distance;
 		} else {
+			// Normalize
 			horizontalOffset *= 1 / maxDragDistance;
 			verticalOffset *= 1 / maxDragDistance;
 		}

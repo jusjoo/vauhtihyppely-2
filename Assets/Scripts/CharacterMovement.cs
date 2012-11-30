@@ -10,12 +10,14 @@ public class CharacterMovement : MonoBehaviour {
 	
 	private float airMovementFactor = 0.4f;
 
-	private float maxSpeedX = 10f;
+	private float maxSpeedX = 14f;
 	private float maxSpeedY = 27f;	
 	
 	private bool jumping;
 	private bool isFeetOnGround;
 	private bool doubleJumpAvailable;
+	
+	private Vector3 airDrag;
 	
 	private Vector3 deltaMove;
 	
@@ -28,6 +30,7 @@ public class CharacterMovement : MonoBehaviour {
 		animationHandler = this.GetComponent<AnimationStateHandler>();
 		powerUpStateHandler = this.GetComponent<PowerUpStateHandler>();
 		doubleJumpAvailable = false;
+		airDrag = new Vector3(12f, 0f, 0f);
 	}
 
 	void Update () {
@@ -36,14 +39,17 @@ public class CharacterMovement : MonoBehaviour {
         animationHandler.flip(player.velocity.x < 0);
 		animationHandler.setRunFactor(player.velocity.x / maxSpeedX );
 		
+		// When player is on air, we need to add air drag
 		if ( ! isOnGround() ) {
 			animationHandler.activateJumpAnimation();
+			addAirDragIfNecessary();
 		}
+		
 		if ( powerUpStateHandler.isPowerUpOn("BlackCoffee") )
 			activateBlackCoffee();
 		
 		if ( powerUpStateHandler.isPowerUpOn("IrishCoffee") ) {
-			player.AddForce( new Vector3(4, 30, 0)*Time.deltaTime/Time.timeScale );
+			player.AddForce( new Vector3(13f, 30f, 0f) *Time.deltaTime/Time.timeScale );
 		}
 	}
 	
@@ -56,6 +62,24 @@ public class CharacterMovement : MonoBehaviour {
 	 */
 	public void move(float deltaX, float deltaY) {
 		
+		{
+			// Some magic code...
+			float tempX = Mathf.Sqrt( Mathf.Abs(deltaX) );
+			float tempY = Mathf.Sqrt( Mathf.Abs(deltaY) );
+			
+			if ( deltaX < 0 ) {
+				deltaX = tempX*(-1);
+			} else {
+				deltaX = tempX;	
+			}
+			
+			if ( deltaY < 0 ) {
+				deltaY = tempY*(-1);
+			} else {
+				deltaY = tempY;	
+			}		
+		}
+			
 		if ( powerUpStateHandler.isPowerUpOn("IrishCoffee") ) {
 			// Don't allow player controls because the player might end up in wrong places
 			return;
@@ -155,6 +179,26 @@ public class CharacterMovement : MonoBehaviour {
 			deltaMove.x = 0;
 		}
 	}
+	
+	private void addAirDragIfNecessary() {
+		float percent = player.velocity.x / maxSpeedX;
+		percent = Mathf.Abs( percent );
+		
+		if ( isMovingRight() ) {
+			player.AddForce( -airDrag * percent * Time.deltaTime / Time.timeScale);
+		} else if ( isMovingLeft() ) {
+			player.AddForce( airDrag * percent * Time.deltaTime / Time.timeScale);
+		}	
+	}
+	
+	private bool isMovingRight() {
+		return player.velocity.x > 0.1;	
+	}
+	
+	private bool isMovingLeft() {
+		return player.velocity.x < -0.1;	
+	}
+
 	
 	private bool isAddingSpeedToRight() {
 		return deltaMove.x > 0;	

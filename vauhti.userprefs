@@ -1,17 +1,17 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GameStartButton.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\CharacterMovement.cs">
     <Files>
-      <File FileName="Assets\Scripts\GameStartButton.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\CharacterMovement.cs" Line="52" Column="35" />
+      <File FileName="Assets\Scripts\GameStartButton.cs" Line="20" Column="3" />
       <File FileName="Assets\Scripts\LevelChooserButton.cs" Line="21" Column="1" />
       <File FileName="Assets\Scripts\SceneHandler.cs" Line="84" Column="2" />
       <File FileName="Assets\Scripts\PowerUpStateHandler.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\GameFinishedButton.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\VectorCharacterControl.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\VectorCharacterControl.cs" Line="71" Column="16" />
       <File FileName="Assets\Scripts\SpriteAnimator.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\LevelNameTrigger.cs" Line="33" Column="1" />
       <File FileName="Assets\Scripts\AnimationStateHandler.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\CharacterMovement.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\PowerUpTrigger.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\PowerUpColorFade.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\GameOverButton.cs" Line="1" Column="1" />
