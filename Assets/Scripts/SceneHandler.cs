@@ -35,7 +35,7 @@ public class SceneHandler : MonoBehaviour {
 		mainMenuScene = 0;		
 		deathScene = 1;
 		gameFinishedScene = 2;
-		lastLevelNumber = 7;
+		lastLevelNumber = 8;
 	}
 	
 	// Update is called once per frame
