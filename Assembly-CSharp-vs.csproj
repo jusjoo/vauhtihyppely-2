@@ -68,6 +68,7 @@
      <Compile Include="Assets\Scripts\LevelCompletion.cs" />
      <Compile Include="Assets\Scripts\LevelNameTrigger.cs" />
      <Compile Include="Assets\Scripts\LightActivator.cs" />
+     <Compile Include="Assets\Scripts\NonMovingKiller.cs" />
      <Compile Include="Assets\Scripts\PixelArtImporter.cs" />
      <Compile Include="Assets\Scripts\PowerUpColorFade.cs" />
      <Compile Include="Assets\Scripts\PowerUpStateHandler.cs" />

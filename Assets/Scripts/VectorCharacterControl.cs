@@ -11,7 +11,7 @@ public class VectorCharacterControl : MonoBehaviour {
 	 * Jumps less than this angle will be ignored,
 	 * and treated as horizontal-only movement.
 	 */
-	private float deadzoneAngle = 20; // degrees
+	private float deadzoneAngle = 25; // degrees
 	
 	private bool isMouseDown;
 	private Vector2 originalMousePosition;	
@@ -56,7 +56,7 @@ public class VectorCharacterControl : MonoBehaviour {
 	}
 	
 	public void sendMovement() {
-
+		
 		// To prevent unwanted jumps
 		if ( isBelowJumpDeadzone() ) {
 			verticalOffset = 0;
@@ -77,7 +77,12 @@ public class VectorCharacterControl : MonoBehaviour {
 	}	
 	
 	private bool isBelowJumpDeadzone() {
-		return calculateAngle() < deadzoneAngle;
+		float angle = calculateAngle();
+		if ( angle < 90f ) {
+			return angle < deadzoneAngle;
+		} else {
+			return Mathf.Abs(180-angle) < deadzoneAngle;
+		}
 	}
 	
 	// Returns in degrees
@@ -85,6 +90,8 @@ public class VectorCharacterControl : MonoBehaviour {
 		float angle = Mathf.Atan2(verticalOffset, horizontalOffset);
 		angle = Mathf.Abs(angle);
 		angle = angle*Mathf.Rad2Deg;
+		angle -= 180;
+		angle = Mathf.Abs(angle);
 		return angle;
 	}
 	

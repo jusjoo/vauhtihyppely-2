@@ -51,6 +51,15 @@ public class CharacterMovement : MonoBehaviour {
 		if ( powerUpStateHandler.isPowerUpOn("IrishCoffee") ) {
 			player.AddForce( new Vector3(13f, 30f, 0f) *Time.deltaTime/Time.timeScale );
 		}
+		
+		// On slow speeds, stop completely
+		// Minimum values set, because otherwise the speed will underflow
+		// and turn the player's face from left to right
+		if ( ( player.velocity.x > 0.05 && player.velocity.x < 0.8 )
+			|| ( player.velocity.x < -0.05 && player.velocity.x > -0.8 )
+			) {
+			player.velocity = new Vector3(player.velocity.x*0.9f, player.velocity.y, 0f);
+		}
 	}
 	
 	/**
@@ -134,7 +143,7 @@ public class CharacterMovement : MonoBehaviour {
 			Debug.Log ("land on a rotated " + collision.transform.rotation.z );
 			land ();
 		} else {
-			// for fucks sake, don't land
+			// we can't stop here. this is bat country.
 		}
 			
 	}

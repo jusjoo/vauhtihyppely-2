@@ -13,7 +13,7 @@ public class TimedSelfDestroyer : MonoBehaviour {
 	void Update () {
 		
 		timeToShow -= Time.deltaTime;
-		Debug.Log (timeToShow);
+		//Debug.Log (timeToShow);
         if ( timeToShow < 0 )
         {
             GameObject.DestroyObject(this.gameObject);

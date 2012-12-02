@@ -45,6 +45,9 @@ public class FallingPlatformScript : MonoBehaviour {
 		{
 			triggered = true;
 			fallTimer = fallAfterTime;
+			Material glassMaterial = Resources.Load("Glass", typeof(Material)) as Material;
+			renderer.material = glassMaterial;
+			renderer.material.shader = Shader.Find("Transparent/Diffuse");
 		}
 
 	}
