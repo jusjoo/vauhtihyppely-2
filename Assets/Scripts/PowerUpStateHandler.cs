@@ -18,11 +18,22 @@ public class PowerUpStateHandler : MonoBehaviour {
 	}
 
 	public void activatePowerUp(string type){
-		powerUps.Clear();
-		powerUps.Add(type);
+
+		// Only add a certain powerup once
+		if ( isPowerUpOn(type) )
+			return;
+		
+		if ( type == "KillIrishCoffee" )
+			removePowerUp("IrishCoffee");
+		else
+			powerUps.Add(type);
 	}
 
 	public bool isPowerUpOn(string type){
 		return (powerUps.Contains(type));
+	}
+	
+	public void removePowerUp(string type) {
+		powerUps.Remove(type);	
 	}
 }

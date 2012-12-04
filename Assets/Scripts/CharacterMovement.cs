@@ -5,33 +5,32 @@ using System.Collections;
 
 public class CharacterMovement : MonoBehaviour {
 	
-	private float multiplierX = 600;
-	private float multiplierY = 1400;
+	private float multiplierX = 0.6f;
+	private float multiplierY = 1f;
 	
-	private float airMovementFactor = 0.7f;
+	private float airMovementFactor = 0.4f;
 
-	private float maxSpeedX = 10f;
-	private float maxSpeedY = 10f;	
+	private float maxSpeedX = 14f;
+	private float maxSpeedY = 27f;	
 	
 	private bool jumping;
 	private bool isFeetOnGround;
 	private bool doubleJumpAvailable;
-	private bool blackCoffeeAvailable;
+	
+	private Vector3 airDrag;
 	
 	private Vector3 deltaMove;
 	
 	private Rigidbody player;
-    private HUDJumpBooster guiText;
 	private AnimationStateHandler animationHandler;
 	private PowerUpStateHandler powerUpStateHandler;
 
 	void Start () {
 		player = this.GetComponent<Rigidbody>();
-        guiText = GameObject.Find("JumpBooster").GetComponent<HUDJumpBooster>();
 		animationHandler = this.GetComponent<AnimationStateHandler>();
 		powerUpStateHandler = this.GetComponent<PowerUpStateHandler>();
-		doubleJumpAvailable = true;
-		blackCoffeeAvailable = true;
+		doubleJumpAvailable = false;
+		airDrag = new Vector3(12f, 0f, 0f);
 	}
 
 	void Update () {
@@ -40,14 +39,26 @@ public class CharacterMovement : MonoBehaviour {
         animationHandler.flip(player.velocity.x < 0);
 		animationHandler.setRunFactor(player.velocity.x / maxSpeedX );
 		
+		// When player is on air, we need to add air drag
 		if ( ! isOnGround() ) {
 			animationHandler.activateJumpAnimation();
+			addAirDragIfNecessary();
 		}
-		if (blackCoffeeActive())
+		
+		if ( powerUpStateHandler.isPowerUpOn("BlackCoffee") )
 			activateBlackCoffee();
 		
 		if ( powerUpStateHandler.isPowerUpOn("IrishCoffee") ) {
-			player.AddForce( new Vector3(9, 35, 0)*Time.deltaTime/Time.timeScale );
+			player.AddForce( new Vector3(13f, 30f, 0f) *Time.deltaTime/Time.timeScale );
+		}
+		
+		// On slow speeds, stop completely
+		// Minimum values set, because otherwise the speed will underflow
+		// and turn the player's face from left to right
+		if ( ( player.velocity.x > 0.05 && player.velocity.x < 0.8 )
+			|| ( player.velocity.x < -0.05 && player.velocity.x > -0.8 )
+			) {
+			player.velocity = new Vector3(player.velocity.x*0.9f, player.velocity.y, 0f);
 		}
 	}
 	
@@ -60,21 +71,51 @@ public class CharacterMovement : MonoBehaviour {
 	 */
 	public void move(float deltaX, float deltaY) {
 		
+		{
+			// Some magic code...
+			float tempX = Mathf.Sqrt( Mathf.Abs(deltaX) );
+			float tempY = Mathf.Sqrt( Mathf.Abs(deltaY) );
+			
+			if ( deltaX < 0 ) {
+				deltaX = tempX*(-1);
+			} else {
+				deltaX = tempX;	
+			}
+			
+			if ( deltaY < 0 ) {
+				deltaY = tempY*(-1);
+			} else {
+				deltaY = tempY;	
+			}		
+		}
+			
+		if ( powerUpStateHandler.isPowerUpOn("IrishCoffee") ) {
+			// Don't allow player controls because the player might end up in wrong places
+			return;
+		}
+		
 		deltaMove = new Vector3(0,0,0);
 		
 		if ( isOnGround() || doubleJumpActive()) {
 			// Player is on the ground. Normal controls
-			deltaMove.x = deltaX*multiplierX;
-			deltaMove.y = deltaY*multiplierY;
+			deltaMove.x = deltaX*multiplierX*maxSpeedX;
+			deltaMove.y = deltaY*multiplierY*maxSpeedY;
+			
+			// If the player wants to jump to complete new direction,
+			// then make it easier
+			/*if ( Mathf.Abs(deltaY) > 0.001 && wantsToChangeDirection() ) {
+				player.velocity = new Vector3(0, player.velocity.y, 0);	
+			}*/
+			
 
 		} else if ( isTryingToReduceSpeed(deltaX) ) {
-			deltaMove.x = deltaX*airMovementFactor*multiplierX;
+			deltaMove.x = deltaX*airMovementFactor*multiplierX*maxSpeedX;
 		}
 		
     	checkMovementBoundaries();
 
 		// To normalize with time
-		player.AddForce (deltaMove * Time.deltaTime/Time.timeScale);
+		player.AddForce (deltaMove);
 	}
 	
 	private bool isTryingToReduceSpeed(float deltaX) {
@@ -83,13 +124,26 @@ public class CharacterMovement : MonoBehaviour {
 		return trying;
 	}
 	
-	public void tryToLand(float collidedTopY) {
+	public void tryToLand(Collision collision) {
 		
-		// To avoid landing on walls.
-		if ( collidedTopY < player.position.y ) {
+		float objCenterY = collision.transform.position.y;
+		float objScaleY = collision.transform.localScale.y;
+		float objHeightY = objScaleY;
+		float objTopY = objCenterY + 0.5f * objHeightY;
+		
+		
+		// 3 is a magic number, because won't land on flag pole otherwise...
+		if ( objTopY < player.position.y + 3 ) {
+			// The object is actually below the player, it's safe to land
+			land ();
+		} else if ( Mathf.Abs(collision.transform.rotation.z) < 0.20f
+				&& Mathf.Abs(collision.transform.rotation.z) > 0.01f ) {
+			// Land because the obj is rotated less than 20 degrees
+			// but it's rotated atleast 1 degree (otherwise it could be a wall)
+			Debug.Log ("land on a rotated " + collision.transform.rotation.z );
 			land ();
 		} else {
-
+			// we can't stop here. this is bat country.
 		}
 			
 	}
@@ -110,20 +164,10 @@ public class CharacterMovement : MonoBehaviour {
 	}
 
 	private bool doubleJumpActive() {
-		if(powerUpStateHandler.isPowerUpOn("Espresso")){
+		if(powerUpStateHandler.isPowerUpOn("DoubleEspresso")){
 			if (doubleJumpAvailable) {
 				doubleJumpAvailable = false;
-                animationHandler.createDoubleJumpEffect();
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private bool blackCoffeeActive(){
-		if (powerUpStateHandler.isPowerUpOn("BlackCoffee")){
-			if (blackCoffeeAvailable){
-				blackCoffeeAvailable = false;
+                //animationHandler.createDoubleJumpEffect();
 				return true;
 			}
 		}
@@ -133,52 +177,43 @@ public class CharacterMovement : MonoBehaviour {
 	private void activateBlackCoffee(){
 		Time.timeScale = 0.2f;
 	}
+	
 	/*
 	 * Prevents the player from going faster than wanted
 	 */
 	private void checkMovementBoundaries() {
-		// We can't set the movement.x value directly,
-		// for example movement.x = 300 won't work.
-		// Because of this we use a workaround.
-		
-		
-		if ( goesFasterThanMaxSpeedX() ) {
+		if ( player.velocity.x > maxSpeedX && isAddingSpeedToRight() ) {
 			deltaMove.x = 0;	
+		} else if ( player.velocity.x < -maxSpeedX && ! isAddingSpeedToRight() ) {
+			deltaMove.x = 0;
 		}
-		
-		return; // FIX THIS SHIT
-		
-		if ( isPlayerGoingRight() && isAddingSpeedToRight() && willGoFasterThanMaxSpeed() ) {
-			
-			// Workaround: With this added amount the movement.x
-			// will be equal to maxSpeedX.
-			Debug.Log ("reduce1");
-			deltaMove.x = maxSpeedX - player.velocity.x;
-		} else if ( ! isPlayerGoingRight() && ! isAddingSpeedToRight() && willGoFasterThanMaxSpeed() ) {
-			// Workaround
-			Debug.Log ("reduce2");
-			deltaMove.x = -maxSpeedX + player.velocity.x;
-		}
-		
 	}
 	
-	private bool isPlayerGoingRight() {
-		return player.velocity.x > 0;	
+	private void addAirDragIfNecessary() {
+		float percent = player.velocity.x / maxSpeedX;
+		percent = Mathf.Abs( percent );
+		
+		if ( isMovingRight() ) {
+			player.AddForce( -airDrag * percent * Time.deltaTime / Time.timeScale);
+		} else if ( isMovingLeft() ) {
+			player.AddForce( airDrag * percent * Time.deltaTime / Time.timeScale);
+		}	
 	}
+	
+	private bool isMovingRight() {
+		return player.velocity.x > 0.1;	
+	}
+	
+	private bool isMovingLeft() {
+		return player.velocity.x < -0.1;	
+	}
+
 	
 	private bool isAddingSpeedToRight() {
 		return deltaMove.x > 0;	
 	}
 	
-	private bool willGoFasterThanMaxSpeed() {
-		if ( isPlayerGoingRight() ) {
-			return player.velocity.x + deltaMove.x > maxSpeedX;
-		} else {
-			return player.velocity.x + deltaMove.x < -maxSpeedX;
-		}
-	}
-	
-	private bool goesFasterThanMaxSpeedX() {
-		return Mathf.Abs(player.velocity.x) > maxSpeedX;	
+	private bool wantsToChangeDirection() {
+		return (deltaMove.x < 0.5 && player.velocity.x > 0 || deltaMove.x > 0.5 && player.velocity.x < 0);
 	}
 }
