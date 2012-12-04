@@ -21,18 +21,17 @@ public class FallingPlatformScript : MonoBehaviour {
 
 		if (triggered)
 		{
-			if (fallTimer > 0)
+
+            fallTimer -= Time.deltaTime;
+            destroyTimer -= Time.deltaTime;
+			
+            if (fallTimer < 0)
 			{
-				fallTimer -= Time.deltaTime;
-                destroyTimer -= Time.deltaTime;
+                gameObject.GetComponent<Rigidbody>().useGravity = true;
+                gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ
+                    | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
 			}
-			else
-			{
-				
-				gameObject.GetComponent<Rigidbody>().useGravity = true;
-				gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ
-					| RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
-			}
+			
             if (destroyTimer < 0)
             {
                 Destroy(gameObject);

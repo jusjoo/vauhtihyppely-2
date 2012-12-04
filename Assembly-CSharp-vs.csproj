@@ -37,14 +37,13 @@
     <Reference Include="System.XML" />
 	<Reference Include="System.Core" />
 	<Reference Include="UnityEngine">
-	  <HintPath>C:/Program Files (x86)/Unity355/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>C:/Program Files (x86)/Unity355/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\ExitSignTrigger.cs" />
      <Compile Include="Assets\Scripts\AnimationStateHandler.cs" />
      <Compile Include="Assets\Scripts\CameraFollower.cs" />
      <Compile Include="Assets\Scripts\CharacterMovement.cs" />
@@ -56,6 +55,7 @@
      <Compile Include="Assets\Scripts\DisposeOnAnyKey.cs" />
      <Compile Include="Assets\Scripts\DoorOpenTrigger.cs" />
      <Compile Include="Assets\Scripts\EffectAnimator.cs" />
+     <Compile Include="Assets\Scripts\ExitSignTrigger.cs" />
      <Compile Include="Assets\Scripts\FallingDeathHandler.cs" />
      <Compile Include="Assets\Scripts\FallingPlatformScript.cs" />
      <Compile Include="Assets\Scripts\FeetSensorTrigger.cs" />
