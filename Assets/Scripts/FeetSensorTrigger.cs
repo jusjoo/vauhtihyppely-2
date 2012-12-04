@@ -29,7 +29,7 @@ public class FeetSensorTrigger : MonoBehaviour {
 	}
 
 	void HandleCollision(Collision collision) {
-		movement.tryToLand(collision);
+		movement.land();
 	}
 	
 
