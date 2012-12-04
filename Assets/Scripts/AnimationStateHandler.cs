@@ -4,7 +4,9 @@ using System.Collections;
 public class AnimationStateHandler : MonoBehaviour {
 
 	public float runVelocity;
-	
+
+	public GameObject jumpEffect;
+    public GameObject doubleJumpEffect;
 
 	private SpriteAnimator animator;
 	private Rigidbody body;
@@ -52,8 +54,20 @@ public class AnimationStateHandler : MonoBehaviour {
 
 
 	public void activateJumpAnimation() {
-		jumping = true;
+
+		if (jumping == false)
+		{
+            GameObject.Instantiate(jumpEffect, this.transform.position - new Vector3(0f, 1f, 0f), jumpEffect.transform.rotation);
+		}
+
+		jumping = true;	
 	}
+
+    public void createDoubleJumpEffect()
+    {
+        GameObject.Instantiate(doubleJumpEffect, this.transform.position - new Vector3(0f, 1f, 0f), doubleJumpEffect.transform.rotation);
+    }
+
 	public void deactivateJumpAnimation()
 	{
 		jumping = false;
@@ -63,4 +77,8 @@ public class AnimationStateHandler : MonoBehaviour {
     {
         animator.flip(b);
     }
+	
+	public void setRunFactor(float runFactor) {
+		animator.setRunFactor(runFactor);
+	}
 }

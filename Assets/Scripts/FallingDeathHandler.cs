@@ -4,10 +4,11 @@ using System.Collections;
 public class FallingDeathHandler : MonoBehaviour {
 
 	public float yThreshold;
-
+	private SceneHandler sceneHandler;
+	
 	// Use this for initialization
 	void Start () {
-	
+		sceneHandler = this.GetComponent<SceneHandler>();
 	}
 	
 	// Update is called once per frame
@@ -20,6 +21,6 @@ public class FallingDeathHandler : MonoBehaviour {
 
 	public void die()
 	{
-		Application.LoadLevel(3);
+		sceneHandler.LoadDeathScene();
 	}
 }

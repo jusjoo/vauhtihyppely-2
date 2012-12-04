@@ -3,11 +3,12 @@ using System.Collections;
 
 public class LevelChooserButton : MonoBehaviour {
 
-	public int sceneNumberToLoad;
-
+	public int levelToLoad;
+	private SceneHandler sceneHandler;
+	
 	// Use this for initialization
 	void Start () {
-	
+		sceneHandler = this.GetComponent<SceneHandler>();
 	}
 	
 	// Update is called once per frame
@@ -16,6 +17,7 @@ public class LevelChooserButton : MonoBehaviour {
 	}
 
 	void OnMouseDown() {
-		Application.LoadLevel(sceneNumberToLoad);
+		Debug.Log ("oon painettu. " + levelToLoad);
+		sceneHandler.skipToLevel(levelToLoad);
 	}
 }
