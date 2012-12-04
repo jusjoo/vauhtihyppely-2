@@ -5,7 +5,9 @@ public class FallingPlatformScript : MonoBehaviour {
 
 
 	public float fallAfterTime;
+    public float destroyAfterTime;
 	private float fallTimer;
+    private float destroyTimer;
 
 	private bool triggered;
 
@@ -22,6 +24,7 @@ public class FallingPlatformScript : MonoBehaviour {
 			if (fallTimer > 0)
 			{
 				fallTimer -= Time.deltaTime;
+                destroyTimer -= Time.deltaTime;
 			}
 			else
 			{
@@ -30,6 +33,10 @@ public class FallingPlatformScript : MonoBehaviour {
 				gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ
 					| RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
 			}
+            if (destroyTimer < 0)
+            {
+                Destroy(gameObject);
+            }
 
 		}
 
@@ -41,6 +48,9 @@ public class FallingPlatformScript : MonoBehaviour {
 		{
 			triggered = true;
 			fallTimer = fallAfterTime;
+            destroyTimer = destroyAfterTime;
+
+
 		}
 
 	}
