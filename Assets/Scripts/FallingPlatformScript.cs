@@ -5,7 +5,9 @@ public class FallingPlatformScript : MonoBehaviour {
 
 
 	public float fallAfterTime;
+    public float destroyAfterTime;
 	private float fallTimer;
+    private float destroyTimer;
 
 	private bool triggered;
 
@@ -16,12 +18,13 @@ public class FallingPlatformScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+
 		if (triggered)
 		{
 			if (fallTimer > 0)
 			{
 				fallTimer -= Time.deltaTime;
+                destroyTimer -= Time.deltaTime;
 			}
 			else
 			{
@@ -30,6 +33,10 @@ public class FallingPlatformScript : MonoBehaviour {
 				gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ
 					| RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
 			}
+            if (destroyTimer < 0)
+            {
+                Destroy(gameObject);
+            }
 
 		}
 
@@ -37,17 +44,13 @@ public class FallingPlatformScript : MonoBehaviour {
 
 	void OnCollisionEnter(Collision c)
 	{
-		// Only trigger the platfrom when the player is above it
-		
-		if (!triggered 
-			&& c.gameObject.name == "Player" 
-			&& c.transform.position.y > gameObject.transform.position.y )
+		if (!triggered && c.gameObject.name == "Player")
 		{
 			triggered = true;
 			fallTimer = fallAfterTime;
-			Material glassMaterial = Resources.Load("Glass", typeof(Material)) as Material;
-			renderer.material = glassMaterial;
-			renderer.material.shader = Shader.Find("Transparent/Diffuse");
+            destroyTimer = destroyAfterTime;
+
+
 		}
 
 	}
