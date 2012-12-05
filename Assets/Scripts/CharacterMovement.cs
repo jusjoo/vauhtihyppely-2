@@ -24,11 +24,13 @@ public class CharacterMovement : MonoBehaviour {
 	private Rigidbody player;
 	private AnimationStateHandler animationHandler;
 	private PowerUpStateHandler powerUpStateHandler;
+    private AudioEffects audioEffects;
 
 	void Start () {
 		player = this.GetComponent<Rigidbody>();
 		animationHandler = this.GetComponent<AnimationStateHandler>();
 		powerUpStateHandler = this.GetComponent<PowerUpStateHandler>();
+        audioEffects = GameObject.Find("AudioEffects").GetComponent<AudioEffects>();
 		doubleJumpAvailable = false;
 		airDrag = new Vector3(12f, 0f, 0f);
 	}
@@ -167,7 +169,7 @@ public class CharacterMovement : MonoBehaviour {
 		if(powerUpStateHandler.isPowerUpOn("DoubleEspresso")){
 			if (doubleJumpAvailable) {
 				doubleJumpAvailable = false;
-                //animationHandler.createDoubleJumpEffect();
+                animationHandler.createDoubleJumpEffect();
 				return true;
 			}
 		}
