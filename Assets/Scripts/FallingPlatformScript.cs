@@ -5,7 +5,7 @@ public class FallingPlatformScript : MonoBehaviour {
 
 
 	public float fallAfterTime;
-    public float destroyAfterTime;
+    public float destroyAfterTime = 3;
 	private float fallTimer;
     private float destroyTimer;
 
@@ -21,18 +21,17 @@ public class FallingPlatformScript : MonoBehaviour {
 
 		if (triggered)
 		{
-			if (fallTimer > 0)
+
+            fallTimer -= Time.deltaTime;
+            destroyTimer -= Time.deltaTime;
+			
+            if (fallTimer < 0)
 			{
-				fallTimer -= Time.deltaTime;
-                destroyTimer -= Time.deltaTime;
+                gameObject.GetComponent<Rigidbody>().useGravity = true;
+                gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ
+                    | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
 			}
-			else
-			{
-				
-				gameObject.GetComponent<Rigidbody>().useGravity = true;
-				gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ
-					| RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
-			}
+			
             if (destroyTimer < 0)
             {
                 Destroy(gameObject);
@@ -49,6 +48,10 @@ public class FallingPlatformScript : MonoBehaviour {
 			triggered = true;
 			fallTimer = fallAfterTime;
             destroyTimer = destroyAfterTime;
+
+			Material glassMaterial = Resources.Load("Glass", typeof(Material)) as Material;
+			renderer.material = glassMaterial;
+			renderer.material.shader = Shader.Find("Transparent/Diffuse");
 
 
 		}
