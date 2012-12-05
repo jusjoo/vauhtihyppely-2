@@ -4,15 +4,25 @@ using System.Collections.Generic;
 
 public class AudioEffects : MonoBehaviour {
 
-    public AudioClip jump;
+    public List<string> keys;
+    public List<AudioClip> values;
 
-
+    private Dictionary<string, AudioClip> clips;
 
     private List<AudioSource> sources;
 
 	// Use this for initialization
 	void Start () {
+
+        clips = new Dictionary<string, AudioClip>();
+
+        for (int i = 0; i < keys.Count; i++)
+        {
+            clips.Add(keys[i], values[i]);
+        }
+
         sources = new List<AudioSource>();
+
 	}
 	
 	// Update is called once per frame
@@ -21,14 +31,19 @@ public class AudioEffects : MonoBehaviour {
         {
             if (!a.isPlaying)
             {
+                sources.Remove(a);
                 Destroy(a);
+                break;
             }
         }
 	}
 
-    public void playJump() {
-        AudioSource audio = new AudioSource();
-        audio.clip = jump;
+    public void play(string name) {
+        sources.Add(gameObject.AddComponent<AudioSource>());
+        AudioClip audioClip;
+        clips.TryGetValue(name, out audioClip);
+
+        audio.clip = audioClip;
         audio.Play();
     }
 }

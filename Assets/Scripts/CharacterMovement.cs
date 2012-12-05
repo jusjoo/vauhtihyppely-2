@@ -108,7 +108,8 @@ public class CharacterMovement : MonoBehaviour {
 			/*if ( Mathf.Abs(deltaY) > 0.001 && wantsToChangeDirection() ) {
 				player.velocity = new Vector3(0, player.velocity.y, 0);	
 			}*/
-			
+
+            if (deltaMove.y > 0) audioEffects.play("jump");
 
 		} else if ( isTryingToReduceSpeed(deltaX) ) {
 			deltaMove.x = deltaX*airMovementFactor*multiplierX*maxSpeedX;
