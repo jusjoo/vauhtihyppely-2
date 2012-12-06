@@ -43,7 +43,9 @@ public class FallingPlatformScript : MonoBehaviour {
 
 	void OnCollisionEnter(Collision c)
 	{
-		if (!triggered && c.gameObject.name == "Player")
+		if ( !triggered
+			&& c.gameObject.name == "Player" 
+			&& c.transform.position.y > gameObject.transform.position.y )
 		{
 			triggered = true;
 			fallTimer = fallAfterTime;
