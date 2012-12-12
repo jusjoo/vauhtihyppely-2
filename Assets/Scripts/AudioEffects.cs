@@ -7,9 +7,9 @@ public class AudioEffects : MonoBehaviour {
     public List<string> keys;
     public List<AudioClip> values;
 
-    private Dictionary<string, AudioClip> clips;
+    private static Dictionary<string, AudioClip> clips;
 
-    private List<AudioSource> sources;
+    private static List<AudioSource> sources;
 
 	// Use this for initialization
 	void Start () {
@@ -38,12 +38,17 @@ public class AudioEffects : MonoBehaviour {
         }
 	}
 
-    public void play(string name) {
-        sources.Add(gameObject.AddComponent<AudioSource>());
+    public static void play(string name)
+    {
+        AudioSource source = GameObject.Find("AudioEffects").AddComponent<AudioSource>();
+        AudioEffects.sources.Add(source);
+
         AudioClip audioClip;
         clips.TryGetValue(name, out audioClip);
 
-        audio.clip = audioClip;
-        audio.Play();
+        source.clip = audioClip;
+        source.Play();
     }
+
+ 
 }
