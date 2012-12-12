@@ -19,6 +19,9 @@ public class PowerUpStateHandler : MonoBehaviour {
 
 	public void activatePowerUp(string type){
 
+        // play a sound effect
+        AudioEffects.play("powerup");
+
 		// Only add a certain powerup once
 		if ( isPowerUpOn(type) )
 			return;

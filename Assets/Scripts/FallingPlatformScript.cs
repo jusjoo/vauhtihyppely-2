@@ -5,7 +5,7 @@ public class FallingPlatformScript : MonoBehaviour {
 
 
 	public float fallAfterTime;
-    public float destroyAfterTime;
+    public float destroyAfterTime = 3;
 	private float fallTimer;
     private float destroyTimer;
 
@@ -43,11 +43,17 @@ public class FallingPlatformScript : MonoBehaviour {
 
 	void OnCollisionEnter(Collision c)
 	{
-		if (!triggered && c.gameObject.name == "Player")
+		if ( !triggered
+			&& c.gameObject.name == "Player" 
+			&& c.transform.position.y > gameObject.transform.position.y )
 		{
 			triggered = true;
 			fallTimer = fallAfterTime;
             destroyTimer = destroyAfterTime;
+
+			Material glassMaterial = Resources.Load("Glass", typeof(Material)) as Material;
+			renderer.material = glassMaterial;
+			renderer.material.shader = Shader.Find("Transparent/Diffuse");
 
 
 		}

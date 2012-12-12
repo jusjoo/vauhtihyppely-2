@@ -106,7 +106,9 @@ public class CharacterMovement : MonoBehaviour {
 			/*if ( Mathf.Abs(deltaY) > 0.001 && wantsToChangeDirection() ) {
 				player.velocity = new Vector3(0, player.velocity.y, 0);	
 			}*/
-			
+
+            if (deltaMove.y > 0) AudioEffects.play("jump");
+            else AudioEffects.play("move");
 
 		} else if ( isTryingToReduceSpeed(deltaX) ) {
 			deltaMove.x = deltaX*airMovementFactor*multiplierX*maxSpeedX;
@@ -167,7 +169,7 @@ public class CharacterMovement : MonoBehaviour {
 		if(powerUpStateHandler.isPowerUpOn("DoubleEspresso")){
 			if (doubleJumpAvailable) {
 				doubleJumpAvailable = false;
-                //animationHandler.createDoubleJumpEffect();
+                animationHandler.createDoubleJumpEffect();
 				return true;
 			}
 		}
@@ -175,9 +177,7 @@ public class CharacterMovement : MonoBehaviour {
 	}
 
 	private void activateBlackCoffee(){
-		//Time.timeScale = 0.2f;
-        Time.timeScale = 0.7f;
-        Time.fixedDeltaTime = 0.7f * 0.000000001f;
+		Time.timeScale = 0.2f;
 	}
 	
 	/*
