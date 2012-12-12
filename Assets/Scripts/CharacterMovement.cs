@@ -175,7 +175,9 @@ public class CharacterMovement : MonoBehaviour {
 	}
 
 	private void activateBlackCoffee(){
-		Time.timeScale = 0.2f;
+		//Time.timeScale = 0.2f;
+        Time.timeScale = 0.7f;
+        Time.fixedDeltaTime = 0.7f * 0.000000001f;
 	}
 	
 	/*
