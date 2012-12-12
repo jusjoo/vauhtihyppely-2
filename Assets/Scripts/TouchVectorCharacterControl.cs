@@ -15,7 +15,7 @@ public class TouchVectorCharacterControl : MonoBehaviour {
 
 	private Touch currentTouch;
 	private bool isTouching;
-	private Vector2 originalMousePosition;	
+	private Vector2 originalTouchPosition;	
 	private float horizontalOffset;
 	private float verticalOffset;
 	
@@ -33,33 +33,27 @@ public class TouchVectorCharacterControl : MonoBehaviour {
 
 		if (Input.touchCount > 0)
 		{
-			// save the first touch to use, ignore multitouch
-			if (currentTouch.Equals(null)) {
-				//currentTouch = ;
-			}
-
-
-
-			if (Input.GetMouseButtonDown(0) && !isTouching)
+			if (Input.touches[0].phase == TouchPhase.Began && !isTouching)
 			{
 				// Mouse was pressed down
 				isTouching = true;
-				originalMousePosition = Input.mousePosition;
+				originalTouchPosition = Input.touches[0].position ;
 
 			}
 			else if (isTouching)
 			{
 				// Mouse is being dragged
-				horizontalOffset = Input.mousePosition.x - originalMousePosition.x;
-				verticalOffset = Input.mousePosition.y - originalMousePosition.y;
+				horizontalOffset = Input.touches[0].position.x - originalTouchPosition.x;
+				verticalOffset = Input.touches[0].position.y - originalTouchPosition.y;
 			}
 
 			// Mouse was released or maximum drag distance achieved
-			if (Input.GetMouseButtonUp(0) && isTouching)
+			if (Input.touches[0].phase == TouchPhase.Ended && isTouching)
 			{
 				isTouching = false;
 				sendMovement();
 				clearDrag();
+				
 			}
 		}
 	}
