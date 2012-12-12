@@ -1,0 +1,48 @@
+body {
+background-color:black;
+font-family: "Arial";
+color: white;
+}
+
+h2 {
+color:#d45500;
+}
+
+p {
+font-size:20px;
+}
+
+.container {
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.header-container {
+    width: 600px;
+}
+
+.question {
+    font-weight: bold;
+    color: #ffff00;
+}
+
+.warp-table td {
+    padding-right: 15px;
+}
+
+.warp {
+    font-weight: bold;
+    color:#d45500;
+}
+
+.run {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.logo {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+}
