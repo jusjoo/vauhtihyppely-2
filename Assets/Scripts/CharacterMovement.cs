@@ -10,8 +10,8 @@ public class CharacterMovement : MonoBehaviour {
 	
 	private float airMovementFactor = 0.4f;
 
-	private float maxSpeedX = 14f;
-	private float maxSpeedY = 27f;	
+	private float maxSpeedX = 17f; //vanha 14f
+	private float maxSpeedY = 30f;	//vanha 27f
 	
 	private bool jumping;
 	private bool isFeetOnGround;
